@@ -1,9 +1,19 @@
 import React from "react";
 import { MdEmail } from "react-icons/md";
 import { IoMdArrowDropdown, IoMdPhonePortrait } from "react-icons/io";
-import { FaFacebookF, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaGithub,
+  FaLinkedin,
+  FaLock,
+  FaTwitter,
+  FaUser,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  const user = false;
+
   return (
     <div className="w-full bg-white">
       <div className="header-top bg-[#caddff] md-lg:hidden">
@@ -50,6 +60,28 @@ const Header = () => {
                     <li>English</li>
                   </ul>
                 </div>
+
+                {user ? (
+                  <Link
+                    className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
+                    to="/dashboard"
+                  >
+                    <span>
+                      <FaUser />
+                    </span>
+                    <span>Yana Syahrudin</span>
+                  </Link>
+                ) : (
+                  <Link
+                    className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
+                    to="/dashboard"
+                  >
+                    <span>
+                      <FaLock />
+                    </span>
+                    <span>Login</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
