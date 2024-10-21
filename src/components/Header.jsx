@@ -10,10 +10,12 @@ import {
   FaLock,
   FaTwitter,
   FaUser,
+  FaPhoneAlt
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
+
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -209,107 +211,142 @@ const Header = () => {
           className={`fixed duration-200 transition-all ${
             showSidebar ? "invisible" : "visible"
           } hidden md-lg:block w-screen h-screen bg-[rgba(0,0,0,0.5)] top-0 left-0 left-0 z-20`}
-        >
-        </div>
+        ></div>
         <div
-            className={`w-[300px] z-[9999] transition-all duration-200 fixed ${
-              showSidebar ? "-left-[300px]" : "left-0 top-0"
-            } overflow-y-auto bg-white h-screen py-6 px-8`}
-          >
-            <div className="flex justify-start flex-col gap-6">
-              <Link to="/">
-                <img src="http://localhost:3000/images/logo.png" alt="" />
-              </Link>
-              <div className="flex justify-start items-center gap-10">
-                <div className="flex group cursor-pointer text-slate-800 text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute ">
-                  <img src="http://localhost:3000/images/language.png" alt="" />
-                  <span>
-                    <IoMdArrowDropdown />
-                  </span>
-                  <ul className="absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10">
-                    <li>Indonesia</li>
-                    <li>English</li>
-                  </ul>
-                </div>
-
-                {user ? (
-                  <Link
-                    className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
-                    to="/dashboard"
-                  >
-                    <span>
-                      <FaUser />
-                    </span>
-                    <span>Yana Syahrudin</span>
-                  </Link>
-                ) : (
-                  <Link
-                    className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
-                    to="/dashboard"
-                  >
-                    <span>
-                      <FaLock />
-                    </span>
-                    <span>Login</span>
-                  </Link>
-                )}
+          className={`w-[300px] z-[9999] transition-all duration-200 fixed ${
+            showSidebar ? "-left-[300px]" : "left-0 top-0"
+          } overflow-y-auto bg-white h-screen py-6 px-8`}
+        >
+          <div className="flex justify-start flex-col gap-6">
+            <Link to="/">
+              <img src="http://localhost:3000/images/logo.png" alt="" />
+            </Link>
+            <div className="flex justify-start items-center gap-10">
+              <div className="flex group cursor-pointer text-slate-800 text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute ">
+                <img src="http://localhost:3000/images/language.png" alt="" />
+                <span>
+                  <IoMdArrowDropdown />
+                </span>
+                <ul className="absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10">
+                  <li>Indonesia</li>
+                  <li>English</li>
+                </ul>
               </div>
 
-              <ul className="flex flex-col justify-start items-start text-sm font-bold uppercase ">
-                <li>
-                  <Link
-                    className={`py-2 block ${
-                      pathname === "/" ? "text-[#059473]" : "text-slate-600"
-                    }`}
-                  >
-                    Home
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className={`py-2 block ${
-                      pathname === "/shop" ? "text-[#059473]" : "text-slate-600"
-                    }`}
-                  >
-                    Shop
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className={`py-2 block ${
-                      pathname === "/blog" ? "text-[#059473]" : "text-slate-600"
-                    }`}
-                  >
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={`py-2 block ${
-                      pathname === "/about"
-                        ? "text-[#059473]"
-                        : "text-slate-600"
-                    }`}
-                  >
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={`py-2 block ${
-                      pathname === "/contact"
-                        ? "text-[#059473]"
-                        : "text-slate-600"
-                    }`}
-                  >
-                    Contact Us
-                  </Link>
-                </li>
-              </ul>
+              {user ? (
+                <Link
+                  className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
+                  to="/dashboard"
+                >
+                  <span>
+                    <FaUser />
+                  </span>
+                  <span>Yana Syahrudin</span>
+                </Link>
+              ) : (
+                <Link
+                  className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
+                  to="/dashboard"
+                >
+                  <span>
+                    <FaLock />
+                  </span>
+                  <span>Login</span>
+                </Link>
+              )}
             </div>
+
+            <ul className="flex flex-col justify-start items-start text-sm font-bold uppercase ">
+              <li>
+                <Link
+                  className={`py-2 block ${
+                    pathname === "/" ? "text-[#059473]" : "text-slate-600"
+                  }`}
+                >
+                  Home
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  className={`py-2 block ${
+                    pathname === "/shop" ? "text-[#059473]" : "text-slate-600"
+                  }`}
+                >
+                  Shop
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  className={`py-2 block ${
+                    pathname === "/blog" ? "text-[#059473]" : "text-slate-600"
+                  }`}
+                >
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`py-2 block ${
+                    pathname === "/about" ? "text-[#059473]" : "text-slate-600"
+                  }`}
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`py-2 block ${
+                    pathname === "/contact"
+                      ? "text-[#059473]"
+                      : "text-slate-600"
+                  }`}
+                >
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+
+            <div className="flex justify-start items-center gap-4 text-black">
+              <a href="#">
+                <FaFacebookF />
+              </a>
+              <a href="#">
+                <FaTwitter />
+              </a>
+              <a href="#">
+                <FaLinkedin />
+              </a>
+              <a href="#">
+                <FaGithub />
+              </a>
+            </div>
+
+            <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">
+              <div className="w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center">
+                <span><FaPhoneAlt /></span>
+              </div>
+              <div className="flex justify-end flex-col gap-1">
+                <h2 className="text-sm font-medium text-slate-700">
+                  +62 896 3953 9018
+                </h2>
+                <span className="text-xs">Support 24/7 </span>
+              </div>
+            </div>
+
+            <ul className="flex flex-col justify-start items-start gap-3 text-[#1c1c1c]">
+              <li className="flex justify-start items-center gap-2 text-sm ">
+                <span>
+                  <MdEmail />
+                </span>
+                <span>support@gmail.com</span>
+              </li>
+            </ul>
+
+
           </div>
+        </div>
       </div>
     </div>
   );
