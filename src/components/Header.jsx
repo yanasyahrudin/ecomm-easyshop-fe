@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdEmail } from "react-icons/md";
-import { IoMdArrowDropdown, IoMdPhonePortrait } from "react-icons/io";
+import { IoMdArrowDropdown, IoMdPhonePortrait,IoIosArrowDown } from "react-icons/io";
 import {
   FaFacebookF,
   FaGithub,
@@ -10,7 +10,7 @@ import {
   FaLock,
   FaTwitter,
   FaUser,
-  FaPhoneAlt
+  FaPhoneAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -21,6 +21,7 @@ const Header = () => {
   const { pathname } = useLocation();
 
   const [showSidebar, setShowSidebar] = useState(true);
+  const [categoryShow, setCategoryShow] = useState(true);
   const user = false;
 
   const whishlist_count = 3;
@@ -325,7 +326,9 @@ const Header = () => {
 
             <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">
               <div className="w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center">
-                <span><FaPhoneAlt /></span>
+                <span>
+                  <FaPhoneAlt />
+                </span>
               </div>
               <div className="flex justify-end flex-col gap-1">
                 <h2 className="text-sm font-medium text-slate-700">
@@ -343,8 +346,28 @@ const Header = () => {
                 <span>support@gmail.com</span>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
 
-
+      <div className="w-[85%] lg:w-[90%] mx-auto">
+        <div className="flex w-full flex-wrap md-lg:gap-8">
+          <div className="w-3/12 md-lg:w-full">
+            <div className="bg-white relative">
+              <div
+                onClick={() => setCategoryShow(!categoryShow)}
+                className="h-[50px] bg-[#059473] text-white flex justify-center md-lg:justify-between md-lg:px-6 items-center  gap-3 font-bold text-md cursor-pointer"
+              >
+                <div className="flex justify-center items-center gap-3">
+                  <span><FaList /></span>
+                  <span>All Category</span>
+                </div>
+                <span className="pt-1"><IoIosArrowDown /></span>
+              </div>
+              <div
+                className={`${categoryShow? 'h-0':'h-[400px]'} overflow-hidden transition-all md-lg:relative duration-500 absolute z-[99999] bg-[#dbf3ed] w-full border-x`}
+              ></div>
+            </div>
           </div>
         </div>
       </div>
