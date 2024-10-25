@@ -25,6 +25,18 @@ const Header = () => {
   const user = false;
 
   const whishlist_count = 3;
+  const categorys = [
+    'Mobiles',
+    'Laptops',
+    'Top Wear',
+    'Footwear',
+    'Watches',
+    'Home Decor',
+    'Smart Watches'
+  ]
+
+  const [searchValue, setSearchValue] = useState('')
+  const [category, setCategory] = useState('')
 
   return (
     <div className="w-full bg-white">
@@ -366,8 +378,38 @@ const Header = () => {
               </div>
               <div
                 className={`${categoryShow? 'h-0':'h-[400px]'} overflow-hidden transition-all md-lg:relative duration-500 absolute z-[99999] bg-[#dbf3ed] w-full border-x`}
-              ></div>
+              >
+                <ul className="py-2 text-slate-600 font-medium">
+                  {
+                    categorys.map((c,i)=>{
+                      return(
+                        <li key={i} className="flex justify-start items-center gap-2 px-[24px] py-[6px]">
+                          <Link className="text-sm block">{c}</Link>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              </div>
             </div>
+          </div>
+
+          <div className="w-9/12 pl-8 md-lg:pl-0 md-lg:w-full">
+          <div className="flex flex-wrap w-full justify-between  items-center md-lg:gap-6">
+                  <div className="flex border h-[50px] items-center relative gap-6">
+                    <div className="relative after:absolute  after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px] md:hidden">
+                      <select onChange={(e)=> setCategory(e.target.value)} name="" id="" className="w-[150px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none">
+                        <option value="">Select Category</option>
+                        {
+                          categorys.map((c,i)=> <option value={c}>
+                            {c}
+                          </option>)
+                        }
+                      </select>
+                    </div>
+                        <input className="w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full " onChange={(e)=> setSearchValue(e.target.value)} type="text" name="" id="" />
+                  </div>
+          </div>
           </div>
         </div>
       </div>
