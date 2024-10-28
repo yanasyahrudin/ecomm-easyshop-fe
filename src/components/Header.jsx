@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { MdEmail } from "react-icons/md";
-import { IoMdArrowDropdown, IoMdPhonePortrait,IoIosArrowDown } from "react-icons/io";
+import {
+  IoMdArrowDropdown,
+  IoMdPhonePortrait,
+  IoIosArrowDown,
+} from "react-icons/io";
 import {
   FaFacebookF,
   FaGithub,
@@ -16,7 +20,6 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 
-
 const Header = () => {
   const { pathname } = useLocation();
 
@@ -26,17 +29,17 @@ const Header = () => {
 
   const whishlist_count = 3;
   const categorys = [
-    'Mobiles',
-    'Laptops',
-    'Top Wear',
-    'Footwear',
-    'Watches',
-    'Home Decor',
-    'Smart Watches'
-  ]
+    "Mobiles",
+    "Laptops",
+    "Top Wear",
+    "Footwear",
+    "Watches",
+    "Home Decor",
+    "Smart Watches",
+  ];
 
-  const [searchValue, setSearchValue] = useState('')
-  const [category, setCategory] = useState('')
+  const [searchValue, setSearchValue] = useState("");
+  const [category, setCategory] = useState("");
 
   return (
     <div className="w-full bg-white">
@@ -371,45 +374,80 @@ const Header = () => {
                 className="h-[50px] bg-[#059473] text-white flex justify-center md-lg:justify-between md-lg:px-6 items-center  gap-3 font-bold text-md cursor-pointer"
               >
                 <div className="flex justify-center items-center gap-3">
-                  <span><FaList /></span>
+                  <span>
+                    <FaList />
+                  </span>
                   <span>All Category</span>
                 </div>
-                <span className="pt-1"><IoIosArrowDown /></span>
+                <span className="pt-1">
+                  <IoIosArrowDown />
+                </span>
               </div>
               <div
-                className={`${categoryShow? 'h-0':'h-[400px]'} overflow-hidden transition-all md-lg:relative duration-500 absolute z-[99999] bg-[#dbf3ed] w-full border-x`}
+                className={`${
+                  categoryShow ? "h-0" : "h-[400px]"
+                } overflow-hidden transition-all md-lg:relative duration-500 absolute z-[99999] bg-[#dbf3ed] w-full border-x`}
               >
                 <ul className="py-2 text-slate-600 font-medium">
-                  {
-                    categorys.map((c,i)=>{
-                      return(
-                        <li key={i} className="flex justify-start items-center gap-2 px-[24px] py-[6px]">
-                          <Link className="text-sm block">{c}</Link>
-                        </li>
-                      )
-                    })
-                  }
+                  {categorys.map((c, i) => {
+                    return (
+                      <li
+                        key={i}
+                        className="flex justify-start items-center gap-2 px-[24px] py-[6px]"
+                      >
+                        <Link className="text-sm block">{c}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
           </div>
 
           <div className="w-9/12 pl-8 md-lg:pl-0 md-lg:w-full">
-          <div className="flex flex-wrap w-full justify-between  items-center md-lg:gap-6">
-                  <div className="flex border h-[50px] items-center relative gap-6">
-                    <div className="relative after:absolute  after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px] md:hidden">
-                      <select onChange={(e)=> setCategory(e.target.value)} name="" id="" className="w-[150px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none">
-                        <option value="">Select Category</option>
-                        {
-                          categorys.map((c,i)=> <option value={c}>
-                            {c}
-                          </option>)
-                        }
-                      </select>
-                    </div>
-                        <input className="w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full " onChange={(e)=> setSearchValue(e.target.value)} type="text" name="" id="" />
+            <div className="flex flex-wrap w-full justify-between  items-center md-lg:gap-6">
+              <div className="flex border h-[50px] items-center relative gap-6">
+                <div className="relative after:absolute  after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px] md:hidden">
+                  <select
+                    onChange={(e) => setCategory(e.target.value)}
+                    name=""
+                    id=""
+                    className="w-[150px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none"
+                  >
+                    <option value="">Select Category</option>
+                    {categorys.map((c, i) => (
+                      <option value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+                <input
+                  className="w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full"
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="What do you need"
+                />
+                <button className="bg-[#059473] right-0 absolute px-8 h-full font-semibold uppercase  text-white">
+                  Search
+                </button>
+              </div>
+              <div className="w-4/12 block md-lg:hidden pl-2 md-lg:w-full md-lg:pl-0">
+                <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">
+                  <div className="w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center">
+                    <span>
+                      <FaPhoneAlt />
+                    </span>
                   </div>
-          </div>
+                  <div className="flex justify-end flex-col gap-1">
+                    <h2 className="text-sm font-medium text-slate-700">
+                      +62 896 3953 9018
+                    </h2>
+                    <span className="text-sm">Support 24/7 </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
