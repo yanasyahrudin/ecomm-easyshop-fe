@@ -406,6 +406,7 @@ const Header = () => {
 
           <div className="w-9/12 pl-8 md-lg:pl-0 md-lg:w-full">
             <div className="flex flex-wrap w-full justify-between  items-center md-lg:gap-6">
+              <div className="w-8/12 md-lg:w-full">
               <div className="flex border h-[50px] items-center relative gap-6">
                 <div className="relative after:absolute  after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px] md:hidden">
                   <select
@@ -432,6 +433,8 @@ const Header = () => {
                   Search
                 </button>
               </div>
+              </div>
+
               <div className="w-4/12 block md-lg:hidden pl-2 md-lg:w-full md-lg:pl-0">
                 <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">
                   <div className="w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center">
