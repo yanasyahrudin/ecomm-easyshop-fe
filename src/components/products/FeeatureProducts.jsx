@@ -1,4 +1,6 @@
 import React from "react";
+import {FaEye, FaRegHeart} from 'react-icons/fa'
+import { RiShoppingCartLine } from "react-icons/ri";
 
 const FeeatureProducts = () => {
   return (
@@ -21,6 +23,23 @@ const FeeatureProducts = () => {
                 8%
               </div>
               <img className="sm:w-ful h-[240px]" src={`http://localhost:3000/images/products/${i + 1}.webp`} alt="" />
+              <ul className="flex transition-all duration-700 -bottom-10 justify-center items gap-2 absolute w-full group-hover:bottom-3">
+              <li className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all">
+                <FaRegHeart /></li>                
+              <li className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all">
+                <FaEye /></li>                
+              <li className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all">
+                <RiShoppingCartLine /></li>                
+              </ul>
+            </div>
+
+            <div className="py-3 text-slate-600 px-2">
+              <h2 className="fonto-bold">Product Name</h2>
+              <div className="flex justify-start items-center gap-3">
+                <span className="text-lg font-semibold">$656</span>
+                
+              </div>
+
             </div>
           </div>
         ))}
