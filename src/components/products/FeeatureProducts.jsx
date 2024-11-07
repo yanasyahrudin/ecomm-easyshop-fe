@@ -1,6 +1,7 @@
 import React from "react";
 import {FaEye, FaRegHeart} from 'react-icons/fa'
 import { RiShoppingCartLine } from "react-icons/ri";
+import Rating from "../Rating";
 
 const FeeatureProducts = () => {
   return (
@@ -37,7 +38,7 @@ const FeeatureProducts = () => {
               <h2 className="fonto-bold">Product Name</h2>
               <div className="flex justify-start items-center gap-3">
                 <span className="text-lg font-semibold">$656</span>
-                
+                  <Rating ratings={4.5}/>
               </div>
 
             </div>
