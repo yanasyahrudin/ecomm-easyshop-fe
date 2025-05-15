@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import Banner from "./../components/Banner";
 import Categorys from "../components/Categorys";
-import FeeatureProducts from "../components/products/FeeatureProducts";
+import FeatureProducts from "../components/products/FeatureProducts";
 import Products from "../components/products/Products";
 import Footer from "../components/Footer";
 
@@ -13,7 +13,7 @@ const Home = () => {
       <Banner />
       <Categorys />
       <div className="py-[45px]">
-        <FeeatureProducts />
+        <FeatureProducts />
       </div>
       <div className="py-10">
         <div className="w-[85%] flex flex-wrap mx-auto">
