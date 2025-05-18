@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link, useLocation } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 
 const Shipping = () => {
-    const {state} = useLocation()
-    console.log(state)
+  const [res, setRes] = useState(false);
+  const [state, setState] = useState({
+    name: "",
+    address: "",
+    phone: "",
+    post: "",
+    province: "",
+    city: "",
+    area: "",
+  });
+
+  const inputHandle = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const save = (e) => {
+    e.preventDefault();
+    const { name, address, phone, post, province, city, area } = state;
+    if (name && address && phone && post && province && city && area) {
+      setRes(true);
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -36,103 +60,131 @@ const Shipping = () => {
                   <h2 className="text-slate-600 font-bold pb-3">
                     Shipping Information
                   </h2>
-                  <form>
-                    <div className="flex md:flex-col md:gap-2 w-full gap-5 text-slate-600">
-                      <div className="flex flex-col gap-1 mb-2 w-full">
-                        <label htmlFor="name">Name</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md "
-                          name="name"
-                          id="name"
-                          placeholder="Name"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-1 mb-2 w-full">
-                        <label htmlFor="address">Address</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
-                          name="address"
-                          id="address"
-                          placeholder="Address"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex md:flex-col md:gap-2 w-full gap-5 text-slate-600">
-                      <div className="flex flex-col gap-1 mb-2 w-full">
-                        <label htmlFor="phone">Phone</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
-                          name="phone"
-                          id="phone"
-                          placeholder="Phone"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-1 mb-2 w-full">
-                        <label htmlFor="post">Post</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
-                          name="post"
-                          id="post"
-                          placeholder="Post"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex md:flex-col md:gap-2 w-full gap-5 text-slate-600">
-                      <div className="flex flex-col gap-1 mb-2 w-full">
-                        <label htmlFor="province">Province</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
-                          name="province"
-                          id="province"
-                          placeholder="Province"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-1 mb-2 w-full">
-                        <label htmlFor="city">City</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
-                          name="city"
-                          id="city"
-                          placeholder="City"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex md:flex-col md:gap-2 w-full gap-5 text-slate-600">
-                      <div className="flex flex-col gap-1 mb-2 w-full">
-                        <label htmlFor="area">Area</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
-                          name="area"
-                          id="area"
-                          placeholder="Area"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-1 mt-7 mb-2 w-full">
-                        <button className="px-3 py-[6px] rounded-sm hover:shadow-green-500/50 hover:shadow-lg bg-green-500 text-white">
-                          Save change
-                        </button>
-                      </div>
-                    </div>
-                  </form>
 
-                  <div className='flex flex-col gap-1'>
-                    <h2 className="text-slate-600 font-semibold pb-2">Deliver To </h2>
+                  {!res && (
+                    <>
+                      <form onSubmit={save}>
+                        <div className="flex md:flex-col md:gap-2 w-full gap-5 text-slate-600">
+                          <div className="flex flex-col gap-1 mb-2 w-full">
+                            <label htmlFor="name">Name</label>
+                            <input
+                              onChange={inputHandle}
+                              value={state.name}
+                              type="text"
+                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md "
+                              name="name"
+                              id="name"
+                              placeholder="Name"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1 mb-2 w-full">
+                            <label htmlFor="address">Address</label>
+                            <input
+                              onChange={inputHandle}
+                              value={state.address}
+                              type="text"
+                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
+                              name="address"
+                              id="address"
+                              placeholder="Address"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex md:flex-col md:gap-2 w-full gap-5 text-slate-600">
+                          <div className="flex flex-col gap-1 mb-2 w-full">
+                            <label htmlFor="phone">Phone</label>
+                            <input
+                              onChange={inputHandle}
+                              value={state.phone}
+                              type="text"
+                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
+                              name="phone"
+                              id="phone"
+                              placeholder="Phone"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1 mb-2 w-full">
+                            <label htmlFor="post">Post</label>
+                            <input
+                              onChange={inputHandle}
+                              value={state.post}
+                              type="text"
+                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
+                              name="post"
+                              id="post"
+                              placeholder="Post"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex md:flex-col md:gap-2 w-full gap-5 text-slate-600">
+                          <div className="flex flex-col gap-1 mb-2 w-full">
+                            <label htmlFor="province">Province</label>
+                            <input
+                              onChange={inputHandle}
+                              value={state.province}
+                              type="text"
+                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
+                              name="province"
+                              id="province"
+                              placeholder="Province"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1 mb-2 w-full">
+                            <label htmlFor="city">City</label>
+                            <input
+                              onChange={inputHandle}
+                              value={state.city}
+                              type="text"
+                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
+                              name="city"
+                              id="city"
+                              placeholder="City"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex md:flex-col md:gap-2 w-full gap-5 text-slate-600">
+                          <div className="flex flex-col gap-1 mb-2 w-full">
+                            <label htmlFor="area">Area</label>
+                            <input
+                              onChange={inputHandle}
+                              value={state.area}
+                              type="text"
+                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500  rounded-md "
+                              name="area"
+                              id="area"
+                              placeholder="Area"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1 mt-7 mb-2 w-full">
+                            <button className="px-3 py-[6px] rounded-sm hover:shadow-green-500/50 hover:shadow-lg bg-green-500 text-white">
+                              Save change
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </>
+                  )}
+
+                  {res&&(
+                    <div className="flex flex-col gap-1">
+                    <h2 className="text-slate-600 font-semibold pb-2">
+                      Deliver To {state.name}
+                    </h2>
                     <p>
-                        <span className="bg-blue-200 text-blue-800 text-sm font-medium mr-2 px-2 py-1 rounded">Home</span>
-                        <span>address, province etc</span>
-                        <span className="text-indigo-500 cursor-pointer">Change</span>
+                      <span className="bg-blue-200 text-blue-800 text-sm font-medium mr-2 px-2 py-1 rounded">
+                        Home
+                      </span>
+                      <span>address, province etc</span>
+                      <span onClick={()=> setRes(false)} className="text-indigo-500 cursor-pointer">
+                        Change
+                      </span>
                     </p>
 
-                    <p className="text-slate-600 text-sm">Email to yana@gmail.com</p>
-
+                    <p className="text-slate-600 text-sm">
+                      Email to yana@gmail.com
+                    </p>
                   </div>
+                  )}
                 </div>
               </div>
             </div>
