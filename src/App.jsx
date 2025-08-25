@@ -5,6 +5,7 @@ import Card from "./pages/Card";
 import Shipping from "./pages/Shipping";
 import Details from  "./pages/Details";
 
+
 function App() {
   return (
     <BrowserRouter>
