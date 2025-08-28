@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Rating from '../components/Rating'
+import Rating from "../components/Rating";
+import { FaHeart } from "react-icons/fa";
 
 const Details = () => {
   const images = [1, 2, 3, 4, 5, 6];
-  const [image, setImage] = useState('')
-  const discount = 10
-  const stock = 3
+  const [image, setImage] = useState("");
+  const discount = 10;
+  const stock = 3;
 
   const responsive = {
     superLargeDesktop: {
@@ -89,7 +90,11 @@ const Details = () => {
               <div className="p-5 border">
                 <img
                   className="h-[400px] w-full"
-                  src={image ? `http://localhost:3000/images/products/${image}.webp` : `http://localhost:3000/images/products/${images[2]}.webp`}
+                  src={
+                    image
+                      ? `http://localhost:3000/images/products/${image}.webp`
+                      : `http://localhost:3000/images/products/${images[2]}.webp`
+                  }
                   alt=""
                 />
               </div>
@@ -120,27 +125,64 @@ const Details = () => {
               </div>
             </div>
 
-            <div className='flex flex-col gap-5'>
-                <div className='text-3xl text-slate-600 font-bold'>
-                  <h3>Product Name</h3>
+            <div className="flex flex-col gap-5">
+              <div className="text-3xl text-slate-600 font-bold">
+                <h3>Product Name</h3>
+              </div>
+              <div className="flex justify-start items-center gap-4">
+                <div className="flex text-xl">
+                  <Rating ratings={4.5} />
                 </div>
-                <div className="flex justify-start items-center gap-4">
-                  <div className="flex text-xl">
-                    <Rating ratings={4.5} />
-                  </div>
-                  <span className="text-green-500">(24 reviews)</span>
-                </div>
+                <span className="text-green-500">(24 reviews)</span>
+              </div>
 
-                <div className='text-2xl text-red-500 font-bold flex gap-3'>
-                  {
-                    discount!== 0 ? <>  
+              <div className="text-2xl text-red-500 font-bold flex gap-3">
+                {discount !== 0 ? (
+                  <>
                     Price: <h2 className="line-through">$500</h2>
-                    <h2 >${500 - Math.floor((500 * discount) / 100)} (-{discount} %)</h2>
-                    </> : <h2>Price : $200 </h2>
-                  }
-                </div>
-            </div>
+                    <h2>
+                      ${500 - Math.floor((500 * discount) / 100)} (-{discount}{" "}
+                      %)
+                    </h2>
+                  </>
+                ) : (
+                  <h2>Price : $200 </h2>
+                )}
+              </div>
 
+              <div className="text-slate-600">
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book.
+                </p>
+              </div>
+
+              <div className="flex gap-3 pb-10 border-b">
+                {stock ? (
+                  <>
+                    <div className="flex bg-slate-200 h-[50px] justify-center items-center text-xl">
+                      <div className="px-6 cursor-pointer">-</div>
+                      <div className="px-6 cursor-pointer">2</div>
+                      <div className="px-6 cursor-pointer">+</div>
+                    </div>
+                    <div>
+                      <button className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#059473] text-white">
+                        Add To Cart
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+
+                <div className="h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-cyan-500 text-white">
+                  <FaHeart />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
