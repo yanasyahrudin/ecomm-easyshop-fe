@@ -8,12 +8,14 @@ import "react-multi-carousel/lib/styles.css";
 import Rating from "../components/Rating";
 import { FaFacebookF, FaGithub, FaHeart, FaLinkedin } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
+import Reviews from "../components/Reviews";
 
 const Details = () => {
   const images = [1, 2, 3, 4, 5, 6];
   const [image, setImage] = useState("");
   const discount = 10;
   const stock = 3;
+  const [state, setState] = useState("reviews");
 
   const responsive = {
     superLargeDesktop: {
@@ -245,6 +247,59 @@ const Details = () => {
                 >
                   Chat Seller
                 </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto pb-16">
+          <div className="flex flex-wrap">
+            <div className="w-[72%] md-lg:w-full">
+              <div className="pr-4 md-lg:pr-0">
+                <div className="grid grid-cols-2">
+                  <button
+                    onClick={() => setState("reviews")}
+                    className={`py-1 hover:text-white px-5 hover:bg-[#059473] ${
+                      state === "reviews"
+                        ? "bg-[#059473] text-white"
+                        : "bg-slate-200 text-slate-700"
+                    } rounded-sm`}
+                  >
+                    Reviews
+                  </button>
+                  <button
+                    onClick={() => setState("descriptions")}
+                    className={`py-1 hover:text-white px-5 hover:bg-[#059473] ${
+                      state === "descriptions"
+                        ? "bg-[#059473] text-white"
+                        : "bg-slate-200 text-slate-700"
+                    } rounded-sm`}
+                  >
+                    Descriptions
+                  </button>
+                </div>
+
+                <div>
+                  {state === "reviews" ? (
+                    <Reviews />
+                  ) : (
+                    <p className="py-5 text-slate-600">
+                      What is lorem Ipsum? Lorem Ipsum is simply dummy text of
+                      the printing and typesetting industry. Lorem Ipsum has
+                      been the industry's standard dummy text ever since the
+                      1500s, when an unknown printer took a galley of type and
+                      scrambled it to make a type specimen book. It has survived
+                      not only five centuries, but also the leap into electronic
+                      typesetting, remaining essentially unchanged. It was
+                      popularised in the 1960s with the release of Letraset
+                      sheets containing Lorem Ipsum passages, and more recently
+                      with desktop publishing software like Aldus PageMaker
+                      including versions of Lorem Ipsum.
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
