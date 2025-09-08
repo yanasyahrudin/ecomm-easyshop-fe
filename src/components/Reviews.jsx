@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Rating from "./Rating";
 import RatingTemp from "./RatingTemp";
+import Pagination from "./products/Pagination";
 
 const Reviews = () => {
+  const [parPage, setParPage] = useState(1);
+  const [pageNumber, setPageNumber] = useState(10);
+
   return (
     <div className="mt-8">
       <div className="flex gap-10 md-lg:flex-col">
@@ -77,6 +81,41 @@ const Reviews = () => {
             </div>
             <p className="text-sm text-slate-600 w-[0%]">0</p>
           </div>
+        </div>
+      </div>
+
+      <h2 className="text-slate-600 text-xl font-bold py-5">
+        Product Review 10
+      </h2>
+
+      <div className="flex flex-col gap-8 pb-10 pt-4">
+        {[1, 2, 3, 4, 5].map((r, i) => (
+          <div className="flex flex-col gap-1">
+            <div className="flex justify-between items-center">
+              <div className="flex gap-1 text-xl">
+                <RatingTemp rating={4} />
+              </div>
+              <span className="text-slate-600">8 Jan 2024</span>
+            </div>
+            <span className="text-slate-600 text-md">Yana Syahrudin</span>
+            <p className="text-slate-600 text-sm">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book.
+            </p>
+          </div>
+        ))}
+        <div className="flex justify-content">
+          {
+            <Pagination
+              pageNumber={pageNumber}
+              setPageNumber={setPageNumber}
+              totalItem={10}
+              parPage={parPage}
+              showItem={Math.floor(10 / 3)}
+            />
+          }
         </div>
       </div>
     </div>
