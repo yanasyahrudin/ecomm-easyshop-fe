@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import Rating from "./Rating";
 import RatingTemp from "./RatingTemp";
 import Pagination from "./products/Pagination";
+import { Link } from "react-router-dom";
+import RatingReact from "react-rating";
+import { FaStar } from "react-icons/fa";
+import { CiStar } from "react-icons/ci";
 
 const Reviews = () => {
   const [parPage, setParPage] = useState(1);
   const [pageNumber, setPageNumber] = useState(10);
+  const userInfo = {};
+  const [rat, setRat] = useState("");
+  const [re, setRe] = useState("");
 
   return (
     <div className="mt-8">
@@ -117,6 +124,45 @@ const Reviews = () => {
             />
           }
         </div>
+      </div>
+
+      <div>
+        {userInfo ? (
+          <div className="flex flex-col gap-3">
+            <div className="flex gap-1">
+              <RatingReact
+                onChange={(e) => setRat(e)}
+                initialRating={rat}
+                emptySymbol={
+                  <span className="text-slate-600 text-4xl">
+                    <CiStar />
+                  </span>
+                }
+                fullSymbol={
+                  <span className="text-[#Edbb0E] text-4xl">
+                    <FaStar />
+                  </span>
+                }
+              />
+            </div>
+            <form>
+              <textarea required className="border outline-0 p-3 w-full" id="" cols="30" rows="5"></textarea>
+              <div className="mt-2">
+                <button className="py-1 px-5 bg-indigo-500 text-white">submit</button>
+              </div>
+            </form>
+          </div>
+        ) : (
+          <div>
+            <Link
+              to="/login"
+              className="py-1 px-5 bg-red-500 text-white rounded-sm"
+            >
+              {" "}
+              Login First
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
