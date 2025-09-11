@@ -44,6 +44,7 @@ const Register = () => {
                       name="name"
                       id="name"
                       placeholder="Name"
+                      required
                     />
                   </div>
 
@@ -57,6 +58,7 @@ const Register = () => {
                       name="email"
                       id="email"
                       placeholder="Email"
+                      required
                     />
                   </div>
 
@@ -70,6 +72,7 @@ const Register = () => {
                       name="password"
                       id="password"
                       placeholder="Password"
+                      required
                     />
                   </div>
 
