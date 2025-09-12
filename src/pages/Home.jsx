@@ -5,7 +5,7 @@ import Categorys from "../components/Categorys";
 import FeatureProducts from "../components/products/FeatureProducts";
 import Products from "../components/products/Products";
 import Footer from "../components/Footer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { get_category } from "../store/reducers/homeReducer";
 
 const Home = () => {
@@ -19,9 +19,9 @@ const Home = () => {
 
   return (
     <div className="w-full">
-      <Header />
+      <Header categorys={categorys}/>
       <Banner />
-      <Categorys />
+      <Categorys  categorys={categorys}/>
       <div className="py-[45px]">
         <FeatureProducts />
       </div>

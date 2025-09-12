@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 
-const Header = () => {
+const Header = ({categorys}) => {
   const { pathname } = useLocation();
 
   const [showSidebar, setShowSidebar] = useState(true);
@@ -28,15 +28,6 @@ const Header = () => {
   const user = false;
 
   const whishlist_count = 3;
-  const categorys = [
-    "Mobiles",
-    "Laptops",
-    "Top Wear",
-    "Footwear",
-    "Watches",
-    "Home Decor",
-    "Smart Watches",
-  ];
 
   const [searchValue, setSearchValue] = useState("");
   const [category, setCategory] = useState("");
@@ -395,7 +386,8 @@ const Header = () => {
                         key={i}
                         className="flex justify-start items-center gap-2 px-[24px] py-[6px]"
                       >
-                        <Link className="text-sm block">{c}</Link>
+                        <img src={c.image} className="w-[30px] h-[30px] rounded-full overflow-hidden" alt="" />
+                        <Link className="text-sm block">{c.name}</Link>
                       </li>
                     );
                   })}
@@ -417,7 +409,7 @@ const Header = () => {
                   >
                     <option value="">Select Category</option>
                     {categorys.map((c, i) => (
-                      <option value={c}>{c}</option>
+                      <option key={i} value={c}>{c.name}</option>
                     ))}
                   </select>
                 </div>
