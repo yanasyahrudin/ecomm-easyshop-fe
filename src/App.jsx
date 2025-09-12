@@ -3,12 +3,19 @@ import Home from "./pages/Home";
 import Shops from "./pages/Shops";
 import Card from "./pages/Card";
 import Shipping from "./pages/Shipping";
-import Details from  "./pages/Details";
+import Details from "./pages/Details";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
+import { useEffect } from "react";
+import { get_category } from "./store/reducers/homeReducer";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch(); 
+  useEffect(() => {
+    dispatch(get_category());
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>

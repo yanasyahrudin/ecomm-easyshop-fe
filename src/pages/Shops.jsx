@@ -253,7 +253,7 @@ const Shops = () => {
               </div>
 
               <div className="py-5 flex flex-col gap-4 md:hidden">
-                <Products title="Latest Product" />
+                {/* <Products title="Latest Product" /> */}
               </div>
             </div>
 

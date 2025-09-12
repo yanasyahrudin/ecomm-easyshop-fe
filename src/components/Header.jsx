@@ -19,8 +19,11 @@ import {
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
-const Header = ({categorys}) => {
+const Header = () => {
+  const { categorys } = useSelector((state) => state.home);
+
   const { pathname } = useLocation();
 
   const [showSidebar, setShowSidebar] = useState(true);
@@ -139,7 +142,8 @@ const Header = ({categorys}) => {
                   </li>
 
                   <li>
-                    <Link to='/shops'
+                    <Link
+                      to="/shops"
                       className={`p-2 block ${
                         pathname === "/shops"
                           ? "text-[#059473]"
@@ -275,7 +279,8 @@ const Header = ({categorys}) => {
               </li>
 
               <li>
-                <Link to='/shops'
+                <Link
+                  to="/shops"
                   className={`py-2 block ${
                     pathname === "/shops" ? "text-[#059473]" : "text-slate-600"
                   }`}
@@ -386,7 +391,11 @@ const Header = ({categorys}) => {
                         key={i}
                         className="flex justify-start items-center gap-2 px-[24px] py-[6px]"
                       >
-                        <img src={c.image} className="w-[30px] h-[30px] rounded-full overflow-hidden" alt="" />
+                        <img
+                          src={c.image}
+                          className="w-[30px] h-[30px] rounded-full overflow-hidden"
+                          alt=""
+                        />
                         <Link className="text-sm block">{c.name}</Link>
                       </li>
                     );
@@ -399,32 +408,34 @@ const Header = ({categorys}) => {
           <div className="w-9/12 pl-8 md-lg:pl-0 md-lg:w-full">
             <div className="flex flex-wrap w-full justify-between  items-center md-lg:gap-6">
               <div className="w-8/12 md-lg:w-full">
-              <div className="flex border h-[50px] items-center relative gap-6">
-                <div className="relative after:absolute  after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px] md:hidden">
-                  <select
-                    onChange={(e) => setCategory(e.target.value)}
+                <div className="flex border h-[50px] items-center relative gap-6">
+                  <div className="relative after:absolute  after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px] md:hidden">
+                    <select
+                      onChange={(e) => setCategory(e.target.value)}
+                      name=""
+                      id=""
+                      className="w-[150px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none"
+                    >
+                      <option value="">Select Category</option>
+                      {categorys.map((c, i) => (
+                        <option key={i} value={c}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <input
+                    className="w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full"
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    type="text"
                     name=""
                     id=""
-                    className="w-[150px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none"
-                  >
-                    <option value="">Select Category</option>
-                    {categorys.map((c, i) => (
-                      <option key={i} value={c}>{c.name}</option>
-                    ))}
-                  </select>
+                    placeholder="What do you need"
+                  />
+                  <button className="bg-[#059473] right-0 absolute px-8 h-full font-semibold uppercase  text-white">
+                    Search
+                  </button>
                 </div>
-                <input
-                  className="w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full"
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="What do you need"
-                />
-                <button className="bg-[#059473] right-0 absolute px-8 h-full font-semibold uppercase  text-white">
-                  Search
-                </button>
-              </div>
               </div>
 
               <div className="w-4/12 block md-lg:hidden pl-2 md-lg:w-full md-lg:pl-0">
