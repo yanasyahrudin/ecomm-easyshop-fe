@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./../components/Header";
 import Footer from "./../components/Footer";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ import { FaThList } from "react-icons/fa";
 import ShopProducts from "../components/products/ShopProducts";
 import Pagination from "../components/products/Pagination";
 import { useDispatch, useSelector } from "react-redux";
+import { price_range_product } from "../store/reducers/homeReducer";
 
 const Shops = () => {
   const { categorys } = useSelector((state) => state.home);
