@@ -11,19 +11,17 @@ import { BsFillGridFill } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
 import ShopProducts from "../components/products/ShopProducts";
 import Pagination from "../components/products/Pagination";
+import { useDispatch, useSelector } from "react-redux";
 
 const Shops = () => {
+  const { categorys } = useSelector((state) => state.home);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(price_range_product());
+  }, []);
+
   const [filter, setFilter] = useState(true);
-  const categorys = [
-    "Mobiles",
-    "Laptops",
-    "Speaker",
-    "Top wear",
-    "Footwear",
-    "Watches",
-    "Home Decor",
-    "Smart Watches",
-  ];
 
   const [state, setState] = useState({ values: [50, 1500] });
   const [rating, setRating] = useState("");
@@ -76,13 +74,13 @@ const Shops = () => {
               </h2>
               <div className="py-2">
                 {categorys.map((c, i) => (
-                  <div className="flex justify-start item-center gap-2 py-1">
-                    <input type="checkbox" id={c} />
+                  <div key={i} className="flex justify-start item-center gap-2 py-1">
+                    <input type="checkbox" id={c.name} />
                     <label
                       className="text-slate-600 block cursor-pointer"
-                      htmlFor={c}
+                      htmlFor={c.name}
                     >
-                      {c}
+                      {c.name}
                     </label>
                   </div>
                 ))}
