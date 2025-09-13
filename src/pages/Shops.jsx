@@ -15,27 +15,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { price_range_product } from "../store/reducers/homeReducer";
 
 const Shops = () => {
-  const { products, categorys,priceRange, latest_product } = useSelector((state) => state.home);
-
   const dispatch = useDispatch();
+  const { products, categorys, priceRange, latest_product } = useSelector(
+    (state) => state.home
+  );
   useEffect(() => {
     dispatch(price_range_product());
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     setState({
-      values: [priceRange.low, priceRange.high]
-    })
-  }, [priceRange])
+      values: [priceRange.low, priceRange.high],
+    });
+  }, [priceRange]);
 
   const [filter, setFilter] = useState(true);
 
-  const [state, setState] = useState({ values: [priceRange.low, priceRange.high] });
+  const [state, setState] = useState({
+    values: [priceRange.low, priceRange.high],
+  });
   const [rating, setRating] = useState("");
   const [styles, setStyles] = useState("grid");
 
   const [parPage, setParPage] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
+
+  const [sortPrice, setSortPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const queryCategory = (e, value) => {
+    if (e.target.checked) {
+      setCategory(value);
+    } else {
+      setCategory("");
+    }
+  };
 
   return (
     <div>
@@ -81,8 +94,16 @@ const Shops = () => {
               </h2>
               <div className="py-2">
                 {categorys.map((c, i) => (
-                  <div key={i} className="flex justify-start item-center gap-2 py-1">
-                    <input type="checkbox" id={c.name} />
+                  <div
+                    key={i}
+                    className="flex justify-start item-center gap-2 py-1"
+                  >
+                    <input
+                      checked={category === c.name ? true : false}
+                      onChange={(e) => queryCategory(e, c.name)}
+                      type="checkbox"
+                      id={c.name}
+                    />
                     <label
                       className="text-slate-600 block cursor-pointer"
                       htmlFor={c.name}
@@ -270,6 +291,7 @@ const Shops = () => {
                   </h2>
                   <div className="flex justify-center items-center gap-3">
                     <select
+                      onChange={(e) => setSortPrice(e.target.value)}
                       className="p-1 border outline-0 text-slate-600 font-semibold"
                       name=""
                       id=""
