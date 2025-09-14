@@ -299,7 +299,7 @@ const Shops = () => {
               <div className="pl-8 md:pl-0">
                 <div className="py-4 bg-white mb-10 px-3 rounded-md flex justify-between item-start border">
                   <h2 className="text-lg font-medium text-slate-600">
-                    14 Products
+                    {totalProduct} Products
                   </h2>
                   <div className="flex justify-center items-center gap-3">
                     <select
