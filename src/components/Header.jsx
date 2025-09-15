@@ -47,7 +47,7 @@ const Header = () => {
                 </span>
                 <span>support@gmail.com</span>
               </li>
-              <li className="flex relative justify-center items-center gap-2 text-sm after:absolute after:h-[18px] after:w-[1px] after:bg-[#afafaf] ">
+              <li className="flex relative justify-center items-center gap-2 text-sm">
                 <span>
                   <IoMdPhonePortrait />
                 </span>
@@ -396,7 +396,7 @@ const Header = () => {
                           className="w-[30px] h-[30px] rounded-full overflow-hidden"
                           alt=""
                         />
-                        <Link className="text-sm block">{c.name}</Link>
+                        <Link to={`/products?category=${c.name}`} className="text-sm block">{c.name}</Link>
                       </li>
                     );
                   })}

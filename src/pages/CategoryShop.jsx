@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./../components/Header";
 import Footer from "./../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { Range } from "react-range";
 import { AiFillStar } from "react-icons/ai";
@@ -15,6 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { price_range_product, query_products } from "../store/reducers/homeReducer";
 
 const Shops = () => {
+
+  let [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get("category")
+  console.log("category", category);
   const dispatch = useDispatch();
   const { products, categorys, priceRange, latest_product, totalProduct, parPage } = useSelector(
     (state) => state.home
@@ -40,14 +44,6 @@ const Shops = () => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const [sortPrice, setSortPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const queryCategory = (e, value) => {
-    if (e.target.checked) {
-      setCategory(value);
-    } else {
-      setCategory("");
-    }
-  };
 
   useEffect(() => {
     dispatch(
@@ -83,13 +79,13 @@ const Shops = () => {
         <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
-              <h2 className="text-3xl font-bold">Shop Page</h2>
+              <h2 className="text-3xl font-bold">Category Page</h2>
               <div className="flex justify-center items-center gap-2 text-2xl w-full">
                 <Link to="/">Home</Link>
                 <span>
                   <IoIosArrowForward className="pt-1" />
                 </span>
-                <span>Shop</span>
+                <span>Category</span>
               </div>
             </div>
           </div>
@@ -115,30 +111,6 @@ const Shops = () => {
                   : "md:h-auto md:overflow-auto md:mb-0"
               }`}
             >
-              <h2 className="text-3xl font-bold mb-3 text-slate-600">
-                Category
-              </h2>
-              <div className="py-2">
-                {categorys.map((c, i) => (
-                  <div
-                    key={i}
-                    className="flex justify-start item-center gap-2 py-1"
-                  >
-                    <input
-                      checked={category === c.name ? true : false}
-                      onChange={(e) => queryCategory(e, c.name)}
-                      type="checkbox"
-                      id={c.name}
-                    />
-                    <label
-                      className="text-slate-600 block cursor-pointer"
-                      htmlFor={c.name}
-                    >
-                      {c.name}
-                    </label>
-                  </div>
-                ))}
-              </div>
 
               <div className="py-2 flex flex-col gap-5">
                 <h2 className="text-3xl font-bold mb-3 text-slate-600">
