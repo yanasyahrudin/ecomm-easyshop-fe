@@ -16,12 +16,13 @@ import {
   FaUser,
   FaPhoneAlt,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 
 const Header = () => {
+
+  const navigate = useNavigate();
   const { categorys } = useSelector((state) => state.home);
 
   const { pathname } = useLocation();
@@ -34,6 +35,10 @@ const Header = () => {
 
   const [searchValue, setSearchValue] = useState("");
   const [category, setCategory] = useState("");
+
+  const search = () => {
+    navigate(`/products/search?category=${category}&&value=${searchValue}`);
+  };
 
   return (
     <div className="w-full bg-white">
@@ -396,7 +401,12 @@ const Header = () => {
                           className="w-[30px] h-[30px] rounded-full overflow-hidden"
                           alt=""
                         />
-                        <Link to={`/products?category=${c.name}`} className="text-sm block">{c.name}</Link>
+                        <Link
+                          to={`/products?category=${c.name}`}
+                          className="text-sm block"
+                        >
+                          {c.name}
+                        </Link>
                       </li>
                     );
                   })}
@@ -418,7 +428,7 @@ const Header = () => {
                     >
                       <option value="">Select Category</option>
                       {categorys.map((c, i) => (
-                        <option key={i} value={c}>
+                        <option key={i} value={c.name}>
                           {c.name}
                         </option>
                       ))}
@@ -432,7 +442,7 @@ const Header = () => {
                     id=""
                     placeholder="What do you need"
                   />
-                  <button className="bg-[#059473] right-0 absolute px-8 h-full font-semibold uppercase  text-white">
+                  <button onClick={search} className="bg-[#059473] right-0 absolute px-8 h-full font-semibold uppercase  text-white">
                     Search
                   </button>
                 </div>

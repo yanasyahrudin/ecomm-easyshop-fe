@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { get_category } from "./store/reducers/homeReducer";
 import { useDispatch } from "react-redux";
 import CategoryShop from "./pages/CategoryShop";
+import SearchProducts from "./pages/SearchProducts";
 
 function App() {
   const dispatch = useDispatch(); 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/card" element={<Card />} />
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/products?" element={<CategoryShop />} />
+        <Route path="/products/search?" element={<SearchProducts />} />
         <Route path="/product/details/:slug" element={<Details />} />
       </Routes>
     </BrowserRouter>
