@@ -100,7 +100,7 @@ const Header = () => {
                 ) : (
                   <Link
                     className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
-                    to="/dashboard"
+                    to="/login"
                   >
                     <span>
                       <FaLock />
