@@ -6,6 +6,7 @@ export const customer_register = createAsyncThunk(
   async (info, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.post("/customer/customer-register", info);
+      // console.log(data)
       localStorage.setItem("customerToken", data.token);
       return fulfillWithValue(data);
     } catch (error) {
@@ -29,7 +30,20 @@ export const authReducer = createSlice({
       state.successMessage = "";
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+    .addCase(customer_register.pending, (state, {payload})=>{
+      state.loader = true;
+    })
+    .addCase(customer_register.rejected, (state, { payload }) => {
+      state.errorMessage = payload.error
+      state.loader = false;
+    })
+    .addCase(customer_register.fulfilled, (state, {payload}) => { 
+      state.successMessage = payload.message;
+      state.loader = false;
+    })
+  },
 });
 
 export const { messageClear } = authReducer.actions;
