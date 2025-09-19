@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { customer_login, messageClear } from "../store/reducers/authReducer";
+import { toast } from "react-hot-toast";
+import { FadeLoader } from "react-spinners";
 
 const Login = () => {
+  const { loader, errorMessage, successMessage } = useSelector(
+    (state) => state.user
+  );
+  const dispatch = useDispatch();
+
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -20,8 +29,24 @@ const Login = () => {
     console.log(state);
   };
 
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [errorMessage, successMessage]);
+
   return (
     <div>
+      {loader && (
+        <div className="w-screen h-screen flex justify-center items-center fixed left-0 top-0 bg-[#38303033] z-[999]">
+          <FadeLoader />
+        </div>
+      )}
       <Header />
       <div className="bg-slate-200 mt-4">
         <div className="w-full justify-center items-center p-10">
@@ -33,8 +58,6 @@ const Login = () => {
 
               <div>
                 <form onSubmit={login} className="text-slate-600">
-                  
-
                   <div className="flex flex-col gap-1 mb-2">
                     <label htmlFor="email">Email</label>
                     <input
