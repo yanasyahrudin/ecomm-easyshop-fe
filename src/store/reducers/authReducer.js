@@ -58,6 +58,17 @@ export const authReducer = createSlice({
       state.successMessage = payload.message;
       state.loader = false;
     })
+    .addCase(customer_login.pending, (state, {payload})=>{
+      state.loader = true;
+    })
+    .addCase(customer_login.rejected, (state, { payload }) => {
+      state.errorMessage = payload.error
+      state.loader = false;
+    })
+    .addCase(customer_login.fulfilled, (state, {payload}) => { 
+      state.successMessage = payload.message;
+      state.loader = false;
+    })
   },
 });
 

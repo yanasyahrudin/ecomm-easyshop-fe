@@ -11,7 +11,7 @@ import { FadeLoader } from "react-spinners";
 
 const Login = () => {
   const { loader, errorMessage, successMessage } = useSelector(
-    (state) => state.user
+    (state) => state.auth
   );
   const dispatch = useDispatch();
 
@@ -27,6 +27,7 @@ const Login = () => {
   const login = (e) => {
     e.preventDefault();
     console.log(state);
+    dispatch(customer_login(state))
   };
 
   useEffect(() => {
