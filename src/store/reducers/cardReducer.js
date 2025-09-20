@@ -19,7 +19,7 @@ export const cardReducer = createSlice({
   name: "card",
   initialState: {
     card_products: [],
-    card_products_count: 0,
+    card_product_count: 0,
     wishlist_count: 0,
     wishlist: [],
     price: 0,
@@ -29,9 +29,20 @@ export const cardReducer = createSlice({
     outOfStock_products: [],
   },
   reducers: {
-
+    messageClear: (state,_) => {  
+      state.errorMessage = "";
+      state.successMessage = "";
+    }
   },
   extraReducers: (builder) => {
+    builder
+    .addCase(add_to_card.rejected, (state, {payload}) => {
+      state.errorMessage = payload.error;
+    })
+    .addCase(add_to_card.fulfilled, (state, {payload}) => {
+        state.successMessage = payload.message;
+        state.card_product_count = state.card_product_count + 1;
+      })
 
   },
 });
