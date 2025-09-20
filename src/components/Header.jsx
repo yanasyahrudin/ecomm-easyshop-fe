@@ -24,6 +24,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const { categorys } = useSelector((state) => state.home);
+  const {userInfo} = useSelector(state=> state.auth)
 
   const { pathname } = useLocation();
 
@@ -87,7 +88,7 @@ const Header = () => {
                   </ul>
                 </div>
 
-                {user ? (
+                {userInfo ? (
                   <Link
                     className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
                     to="/dashboard"
@@ -95,7 +96,7 @@ const Header = () => {
                     <span>
                       <FaUser />
                     </span>
-                    <span>Yana Syahrudin</span>
+                    <span>{userInfo.name}</span>
                   </Link>
                 ) : (
                   <Link
@@ -249,7 +250,7 @@ const Header = () => {
                 </ul>
               </div>
 
-              {user ? (
+              {userInfo ? (
                 <Link
                   className="flex cursor-pointer justify-center items-center gap-2 text-sm text-black "
                   to="/dashboard"
@@ -257,7 +258,7 @@ const Header = () => {
                   <span>
                     <FaUser />
                   </span>
-                  <span>Yana Syahrudin</span>
+                  <span>{userInfo.name}</span>
                 </Link>
               ) : (
                 <Link
