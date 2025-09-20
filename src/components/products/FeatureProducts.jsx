@@ -3,8 +3,26 @@ import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import Rating from "../Rating";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { add_to_card } from "../../store/reducers/cardReducer";
 
 const FeeatureProducts = ({ products }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
+  const add_card = (id) => {
+    if (userInfo) {
+      dispatch(add_to_card({
+        userId: userInfo.id,
+        quantity: 1,
+        productId: id
+      }))
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="w-[85%] flex flex-wrap mx-auto">
       <div className="w-full">
@@ -39,7 +57,12 @@ const FeeatureProducts = ({ products }) => {
                 >
                   <FaEye />
                 </Link>
-                <li className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all">
+                <li
+                  onClick={() => {
+                    add_card(p._id);
+                  }}
+                  className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all"
+                >
                   <RiShoppingCartLine />
                 </li>
               </ul>
