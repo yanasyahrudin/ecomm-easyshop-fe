@@ -43,6 +43,7 @@ export const cardReducer = createSlice({
     successMessage: "",
     shipping_fee: 0,
     outOfStock_products: [],
+    buy_product_item: 0,
   },
   reducers: {
     messageClear: (state, _) => {
