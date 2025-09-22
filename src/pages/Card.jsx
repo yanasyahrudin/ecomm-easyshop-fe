@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   get_card_products,
   delete_card_product,
-  quanity_inc,
+  quantity_inc,
+  quantity_dec,
   messageClear,
 } from "../store/reducers/cardReducer";
 import toast from "react-hot-toast";
@@ -21,7 +22,7 @@ const Card = () => {
     price,
     buy_product_item,
     shipping_fee,
-    outOfStock_products
+    outOfStock_products,
   } = useSelector((state) => state.card);
 
   const navigate = useNavigate();
@@ -50,11 +51,18 @@ const Card = () => {
   }, [successMessage]);
 
   const inc = (quantity, stock, card_id) => {
-    const temp = quantity + 1
+    const temp = quantity + 1;
     if (temp <= stock) {
-      dispatch(quanity_inc(card_id))
+      dispatch(quantity_inc(card_id));
     }
-  }
+  };
+
+  const dec = (quantity, card_id) => {
+    const temp = quantity - 1;
+    if (temp !== 0 ) {
+      dispatch(quantity_dec(card_id));
+    }
+  };
 
   return (
     <div>
@@ -136,7 +144,17 @@ const Card = () => {
 
                               <div className="flex gap-2 flex-col">
                                 <div className="flex bg-slate-200 h-[30px] justify-center text-xl">
-                                  <div className="px-3 cursor-pointer">-</div>
+                                  <div
+                                    onClick={() =>
+                                      dec(
+                                        pt.quantity,
+                                        pt._id
+                                      )
+                                    }
+                                    className="px-3 cursor-pointer"
+                                  >
+                                    -
+                                  </div>
                                   <div className="px-3">{pt.quantity}</div>
                                   <div
                                     onClick={() =>
