@@ -83,8 +83,11 @@ export const cardReducer = createSlice({
         state.shipping_fee = payload.shipping_fee;
         state.outOfStock_products = payload.outOfStockProduct;
         state.buy_product_item = payload.buy_product_item;
+      })
+      .addCase(delete_card_product.fulfilled, (state, { payload }) => {
+        state.successMessage = payload.message;
+      }); 
 
-      });
   },
 });
 
