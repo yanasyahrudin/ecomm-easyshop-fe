@@ -101,8 +101,10 @@ export const cardReducer = createSlice({
       })
       .addCase(delete_card_product.fulfilled, (state, { payload }) => {
         state.successMessage = payload.message;
-      }); 
-
+      }) 
+      .addCase(quanity_inc.fulfilled, (state, { payload }) => {
+        state.successMessage = payload.message;
+      });
   },
 });
 
