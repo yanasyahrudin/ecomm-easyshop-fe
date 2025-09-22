@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { get_card_products } from "../store/reducers/cardReducer";
+import { get_card_products, delete_card_product } from "../store/reducers/cardReducer";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -102,7 +102,7 @@ const Card = () => {
                                   <div className="px-3">{pt.quantity}</div>
                                   <div className="px-3 cursor-pointer">+</div>
                                 </div>
-                                <button className="px-5 py-[3px] bg-red-500">
+                                <button onClick={()=>dispatch(delete_card_product(pt._id))} className="px-5 py-[3px] bg-red-500">
                                   Delete
                                 </button>
                               </div>
@@ -176,12 +176,12 @@ const Card = () => {
                     >
                       <h2 className="text-xl font-bold ">Order Summary</h2>
                       <div className="flex justify-between items-center">
-                        <span>2 Items</span>
-                        <span>$343</span>
+                        <span>{buy_product_item} Items</span>
+                        <span>${price}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span>Shipping Fee</span>
-                        <span>$40</span>
+                        <span>${shipping_fee}</span>
                       </div>
                       <div className="flex gap-2">
                         <input
@@ -195,13 +195,13 @@ const Card = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <span>Total</span>
-                        <span className="text-lg text-[#059473]">$430</span>
+                        <span className="text-lg text-[#059473]">${price + shipping_fee}</span>
                       </div>
                       <button
                         onClick={redirect}
                         className="px-5 py-[6px] rounded-sm hover:shadow-red-500/50 hover:shadow-lg bg-red-500 text-sm text-white uppercase"
                       >
-                        Process to Checkout
+                        Process to Checkout ({buy_product_item})
                       </button>
                     </div>
                   )}

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api/api";
 
 export const add_to_card = createAsyncThunk(
-  "auth/add_to_card",
+  "card/add_to_card",
   async (info, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.post("/home/product/add-to-card", info);
@@ -16,11 +16,27 @@ export const add_to_card = createAsyncThunk(
 //end method
 
 export const get_card_products = createAsyncThunk(
-  "auth/get_card_products",
+  "card/get_card_products",
   async (userId, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.get(
         `/home/product/get-card-product/${userId}`
+      );
+      // console.log(data);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+//end method
+
+export const delete_card_product = createAsyncThunk(
+  "card/delete_card_product",
+  async (card_id, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.delete(
+        `/home/product/delete-card-product/${card_id}`
       );
       console.log(data);
       return fulfillWithValue(data);
