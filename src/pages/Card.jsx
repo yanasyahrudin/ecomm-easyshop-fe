@@ -4,14 +4,26 @@ import Footer from "../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { get_card_products, delete_card_product, messageClear } from "../store/reducers/cardReducer";
+import {
+  get_card_products,
+  delete_card_product,
+  quanity_inc,
+  messageClear,
+} from "../store/reducers/cardReducer";
 import toast from "react-hot-toast";
 
 const Card = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
-  const { card_products, successMessage, price, buy_product_item, shipping_fee, outOfStock_products } = useSelector((state) => state.card);
-  
+  const {
+    card_products,
+    successMessage,
+    price,
+    buy_product_item,
+    shipping_fee,
+    outOfStock_products
+  } = useSelector((state) => state.card);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,10 +44,17 @@ const Card = () => {
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage);
-      dispatch(messageClear())
+      dispatch(messageClear());
       dispatch(get_card_products(userInfo.id));
     }
   }, [successMessage]);
+
+  const inc = (quantity, stock, card_id) => {
+    const temp = quantity + 1
+    if (temp <= stock) {
+      dispatch(quanity_inc(card_id))
+    }
+  }
 
   return (
     <div>
@@ -91,7 +110,9 @@ const Card = () => {
                                   <h2 className="text-md font-semibold">
                                     {pt.productInfo.name}
                                   </h2>
-                                  <span className="">Brand: {pt.productInfo.brand}</span>
+                                  <span className="">
+                                    Brand: {pt.productInfo.brand}
+                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -99,9 +120,17 @@ const Card = () => {
                             <div className="flex justify-between w-5/12 sm:w-full sm:mt-3">
                               <div className="pl-4 sm:pl-0">
                                 <h2 className="text-lg text-orange-500">
-                                  ${pt.productInfo.price - Math.floor((pt.productInfo.price * pt.productInfo.discount) / 100)}
+                                  $
+                                  {pt.productInfo.price -
+                                    Math.floor(
+                                      (pt.productInfo.price *
+                                        pt.productInfo.discount) /
+                                        100
+                                    )}
                                 </h2>
-                                <p className="line-through">${pt.productInfo.price}</p>
+                                <p className="line-through">
+                                  ${pt.productInfo.price}
+                                </p>
                                 <p>-{pt.productInfo.discount}%</p>
                               </div>
 
@@ -109,9 +138,25 @@ const Card = () => {
                                 <div className="flex bg-slate-200 h-[30px] justify-center text-xl">
                                   <div className="px-3 cursor-pointer">-</div>
                                   <div className="px-3">{pt.quantity}</div>
-                                  <div className="px-3 cursor-pointer">+</div>
+                                  <div
+                                    onClick={() =>
+                                      inc(
+                                        pt.quantity,
+                                        pt.productInfo.stock,
+                                        pt._id
+                                      )
+                                    }
+                                    className="px-3 cursor-pointer"
+                                  >
+                                    +
+                                  </div>
                                 </div>
-                                <button onClick={()=>dispatch(delete_card_product(pt._id))} className="px-5 py-[3px] bg-red-500">
+                                <button
+                                  onClick={() =>
+                                    dispatch(delete_card_product(pt._id))
+                                  }
+                                  className="px-5 py-[3px] bg-red-500"
+                                >
                                   Delete
                                 </button>
                               </div>
@@ -143,7 +188,9 @@ const Card = () => {
                                     <h2 className="text-md font-semibold">
                                       {p.products[0].name}
                                     </h2>
-                                    <span className="">Brand: {p.products[0].brand}</span>
+                                    <span className="">
+                                      Brand: {p.products[0].brand}
+                                    </span>
                                   </div>
                                 </div>
                               </div>
@@ -151,9 +198,17 @@ const Card = () => {
                               <div className="flex justify-between w-5/12 sm:w-full sm:mt-3">
                                 <div className="pl-4 sm:pl-0">
                                   <h2 className="text-lg text-orange-500">
-                                    ${p.products[0].price - Math.floor((p.products[0].price * p.products[0].discount) / 100)}
+                                    $
+                                    {p.products[0].price -
+                                      Math.floor(
+                                        (p.products[0].price *
+                                          p.products[0].discount) /
+                                          100
+                                      )}
                                   </h2>
-                                  <p className="line-through">${p.products[0].price}</p>
+                                  <p className="line-through">
+                                    ${p.products[0].price}
+                                  </p>
                                   <p>-${p.products[0].discount}%</p>
                                 </div>
 
@@ -204,7 +259,9 @@ const Card = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <span>Total</span>
-                        <span className="text-lg text-[#059473]">${price + shipping_fee}</span>
+                        <span className="text-lg text-[#059473]">
+                          ${price + shipping_fee}
+                        </span>
                       </div>
                       <button
                         onClick={redirect}

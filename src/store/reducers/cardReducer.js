@@ -38,7 +38,7 @@ export const delete_card_product = createAsyncThunk(
       const { data } = await api.delete(
         `/home/product/delete-card-product/${card_id}`
       );
-      console.log(data);
+      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -46,6 +46,21 @@ export const delete_card_product = createAsyncThunk(
   }
 );
 //end method
+
+export const quanity_inc = createAsyncThunk(
+  "card/quanity_inc",
+  async (card_id, { rejectWithValue, fulfillWithValue }) => { 
+    try {
+      const { data } = await api.put(
+        `/home/product/quantity-inc/${card_id}`
+      );
+      console.log(data);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const cardReducer = createSlice({
   name: "card",
