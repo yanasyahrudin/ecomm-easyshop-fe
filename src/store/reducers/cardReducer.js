@@ -6,7 +6,7 @@ export const add_to_card = createAsyncThunk(
   async (info, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.post("/home/product/add-to-card", info);
-      console.log(data)
+      console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -19,8 +19,10 @@ export const get_card_products = createAsyncThunk(
   "auth/get_card_products",
   async (userId, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const { data } = await api.get(`/home/product/get-card-product/${userId}`);
-      console.log(data)
+      const { data } = await api.get(
+        `/home/product/get-card-product/${userId}`
+      );
+      console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -43,21 +45,29 @@ export const cardReducer = createSlice({
     outOfStock_products: [],
   },
   reducers: {
-    messageClear: (state,_) => {  
+    messageClear: (state, _) => {
       state.errorMessage = "";
       state.successMessage = "";
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
-    .addCase(add_to_card.rejected, (state, {payload}) => {
-      state.errorMessage = payload.error;
-    })
-    .addCase(add_to_card.fulfilled, (state, {payload}) => {
+      .addCase(add_to_card.rejected, (state, { payload }) => {
+        state.errorMessage = payload.error;
+      })
+      .addCase(add_to_card.fulfilled, (state, { payload }) => {
         state.successMessage = payload.message;
         state.card_product_count = state.card_product_count + 1;
       })
+      .addCase(get_card_products.fulfilled, (state, { payload }) => {
+        state.card_products = payload.card_products;
+        state.price = payload.price;
+        state.card_product_count = payload.card_product_count;
+        state.shipping_fee = payload.shipping_fee;
+        state.outOfStock_products = payload.outOfStockProduct;
+        state.buy_product_item = payload.buy_product_item;
 
+      });
   },
 });
 
