@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Rating from "./Rating";
 import RatingTemp from "./RatingTemp";
-import Pagination from "./products/Pagination";
+import Pagination from "./Pagination";
 import { Link } from "react-router-dom";
 import RatingReact from "react-rating";
 import { FaStar } from "react-icons/fa";

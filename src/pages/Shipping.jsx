@@ -5,6 +5,9 @@ import { Link, useLocation } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 
 const Shipping = () => {
+
+  const {state: {products, price, shipping_fee, items}} = useLocation();
+  console.log(products, 'test', price);
   const [res, setRes] = useState(false);
   const [state, setState] = useState({
     name: "",
@@ -193,39 +196,37 @@ const Shipping = () => {
                   )}
                 </div>
 
-                {[1, 2].map((p, i) => (
-                  <div className="flex bg-white p-4 flex-col gap-2">
+                {products.map((p, i) => (
+                  <div key={i} className="flex bg-white p-4 flex-col gap-2">
                     <div className="flex justify-start items-center">
                       <h2 className="text-md text-slate-600 font-bold">
-                        Easy Shop
+                        {p.shopName}
                       </h2>
                     </div>
 
-                    {[1, 2].map((p, i) => (
+                    {p.products.map((pt, i) => (
                       <div className="w-full flex flex-wrap">
                         <div className="flex sm:w-full gap-2 w-7/12">
                           <div className="flex gap-2 justify-start items-center">
                             <img
                               className="w-[80px] h-[80px]"
-                              src={`http://localhost:3000/images/products/${
-                                i + 1
-                              }.webp`}
+                              src={pt.productInfo.images[0]}
                               alt=""
                             />
                             <div className="pr-4 text-slate-600">
                               <h2 className="text-md font-semibold">
-                                Product Name
+                                {pt.productInfo.name}
                               </h2>
-                              <span className="">Brand: Jara</span>
+                              <span className="">Brand: {}</span>
                             </div>
                           </div>
                         </div>
 
                         <div className="flex justify-between w-5/12 sm:w-full sm:mt-3">
                           <div className="pl-4 sm:pl-0">
-                            <h2 className="text-lg text-orange-500">$240</h2>
-                            <p className="line-through">$300</p>
-                            <p>-$15</p>
+                            <h2 className="text-lg text-orange-500">${pt.productInfo.price - Math.floor((pt.productInfo.price * pt.productInfo.discount) / 100)}</h2>
+                            <p className="line-through">${pt.productInfo.price}</p>
+                            <p>-${pt.productInfo.discount}</p>
                           </div>
 
                           <div className="flex gap-2 flex-col">
@@ -253,22 +254,22 @@ const Shipping = () => {
                 >
                   <h2 className="text-xl font-bold ">Order Summary</h2>
                   <div className="flex justify-between items-center">
-                    <span>Items Total (5)</span>
-                    <span>$343</span>
+                    <span>Items Total ({items})</span>
+                    <span>${price}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Delivery Fee</span>
-                    <span>$40</span>
+                    <span>${shipping_fee}</span>
                   </div>
 
                   <div className="flex justify-between items-center">
                     <span>Total Payment</span>
-                    <span>$450</span>
+                    <span>${price + shipping_fee}</span>
                   </div>
 
                   <div className="flex justify-between items-center">
                     <span>Total</span>
-                    <span className="text-lg text-[#059473]">$490</span>
+                    <span className="text-lg text-[#059473]">${price + shipping_fee}</span>
                   </div>
                   <button
                     disabled={res ? false : true}

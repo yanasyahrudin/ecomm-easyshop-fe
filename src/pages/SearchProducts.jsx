@@ -10,7 +10,7 @@ import Products from "./../components/products/Products";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
 import ShopProducts from "../components/products/ShopProducts";
-import Pagination from "../components/products/Pagination";
+import Pagination from "../components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { price_range_product, query_products } from "../store/reducers/homeReducer";
 

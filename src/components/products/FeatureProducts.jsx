@@ -87,7 +87,7 @@ const FeeatureProducts = ({ products }) => {
             <div className="py-3 text-slate-600 px-2">
               <h2 className="fonto-bold">{p.name}</h2>
               <div className="flex justify-start items-center gap-3">
-                <span className="text-lg font-semibold">{p.price}</span>
+                <span className="text-lg font-semibold">${p.price}</span>
                 <Rating ratings={p.rating} />
               </div>
             </div>

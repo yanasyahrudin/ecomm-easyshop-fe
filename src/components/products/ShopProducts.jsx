@@ -49,7 +49,7 @@ const ShopProducts = ({ styles, products }) => {
               <div className="flex justify-start items-start flex-col">
               <h2 className="fonto-bold">{p.name}</h2>
               <div className="flex justify-start items-center gap-3">
-                <span className="text-lg font-semibold">{p.price}</span>
+                <span className="text-lg font-semibold">${p.price}</span>
                   <Rating ratings={p.rating}/>
             </div>
             </div>
