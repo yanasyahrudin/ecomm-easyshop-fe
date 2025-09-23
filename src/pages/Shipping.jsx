@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { place_order } from "../store/reducers/orderReducer";
 
 const Shipping = () => {
+  const {
+    state: { products, price, shipping_fee, items },
+  } = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const { userInfo } = useSelector((state) => state.auth);
 
-  const {state: {products, price, shipping_fee, items}} = useLocation();
-  console.log(products, 'test', price);
   const [res, setRes] = useState(false);
   const [state, setState] = useState({
     name: "",
@@ -32,6 +38,12 @@ const Shipping = () => {
     if (name && address && phone && post && province && city && area) {
       setRes(true);
     }
+  };
+
+  const placeOrder = () => {
+    dispatch(
+      place_order({ price, products, shipping_fee, items, shippingInfo: state, userId: userInfo, navigate})
+    );
   };
 
   return (
@@ -224,8 +236,18 @@ const Shipping = () => {
 
                         <div className="flex justify-between w-5/12 sm:w-full sm:mt-3">
                           <div className="pl-4 sm:pl-0">
-                            <h2 className="text-lg text-orange-500">${pt.productInfo.price - Math.floor((pt.productInfo.price * pt.productInfo.discount) / 100)}</h2>
-                            <p className="line-through">${pt.productInfo.price}</p>
+                            <h2 className="text-lg text-orange-500">
+                              $
+                              {pt.productInfo.price -
+                                Math.floor(
+                                  (pt.productInfo.price *
+                                    pt.productInfo.discount) /
+                                    100
+                                )}
+                            </h2>
+                            <p className="line-through">
+                              ${pt.productInfo.price}
+                            </p>
                             <p>-${pt.productInfo.discount}</p>
                           </div>
 
@@ -269,11 +291,16 @@ const Shipping = () => {
 
                   <div className="flex justify-between items-center">
                     <span>Total</span>
-                    <span className="text-lg text-[#059473]">${price + shipping_fee}</span>
+                    <span className="text-lg text-[#059473]">
+                      ${price + shipping_fee}
+                    </span>
                   </div>
                   <button
+                    onClick={placeOrder}
                     disabled={res ? false : true}
-                    className={`px-5 py-[6px] rounded-sm hover:shadow-red-500/50 hover:shadow-lg ${res?'bg-red-500':'bg-red-300'} bg-red-500 text-sm text-white uppercase`}
+                    className={`px-5 py-[6px] rounded-sm hover:shadow-red-500/50 hover:shadow-lg ${
+                      res ? "bg-red-500" : "bg-red-300"
+                    } bg-red-500 text-sm text-white uppercase`}
                   >
                     Place Order
                   </button>
