@@ -42,7 +42,7 @@ const Shipping = () => {
 
   const placeOrder = () => {
     dispatch(
-      place_order({ price, products, shipping_fee, items, shippingInfo: state, userId: userInfo, navigate})
+      place_order({ price, products, shipping_fee, items, shippingInfo: state, userId: userInfo.id, navigate})
     );
   };
 

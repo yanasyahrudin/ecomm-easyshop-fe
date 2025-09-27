@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api/api";
 
+
 export const place_order = createAsyncThunk(
   "order/place_order",
   async ({
@@ -22,6 +23,13 @@ export const place_order = createAsyncThunk(
         userId,
         navigate,
       });
+      navigate('/payment' ,{
+        state: {
+          price: price+shipping_fee,
+          items,
+          orderId: data.orderId
+        }
+      })
       console.log(data);
     } catch (error) {
       console.log(error.response);
