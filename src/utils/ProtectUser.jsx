@@ -5,7 +5,7 @@ import { Navigate, Outlet } from "react-router-dom";
 const ProtectUser = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
-  if (!userInfo) {
+  if (userInfo) {
     return <Outlet />;
   } else {
     return <Navigate to="/" replace={true} />;
