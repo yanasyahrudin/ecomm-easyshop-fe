@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RiShoppingCart2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const Index = () => {
+
+  const dispatch = useDispatch()
+  const {userInfo} = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    dispatch(get_dashboard_index_data(userInfo.id))
+  }, [])
+
   return (
     <div>
       <div className="grid grid-cols-3 md:grid-cols-1 gap-5">
