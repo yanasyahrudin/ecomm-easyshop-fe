@@ -57,7 +57,7 @@ const Dashboard = () => {
                   <span className="text-xl">
                     <FaHeart />
                   </span>
-                  <Link to="/dashboard/" className="block">
+                  <Link to="/dashboard/my-wishlist" className="block">
                     Wishlist
                   </Link>
                 </li>
@@ -73,7 +73,7 @@ const Dashboard = () => {
                   <span className="text-xl">
                     <RiLockPasswordLine />
                   </span>
-                  <Link to="/dashboard/" className="block">
+                  <Link to="/dashboard/change-password" className="block">
                     Change Password
                   </Link>
                 </li>
