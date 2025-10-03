@@ -8,21 +8,20 @@ export const get_dashboard_index_data = createAsyncThunk(
       const { data } = await api.get(
         `/home/coustomer/get-dashboard-data/${userId}`
       );
-      console.log(data);
-      //   return fulfillWithValue(data);
+      // console.log(data);
+      return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const orderReducer = createSlice({
+export const dashboardReducer = createSlice({
   name: "dashboard",
   initialState: {
-    loading: false,
+    recentOrders: [],
     errorMessage: "",
     successMessage: "",
-    recentOrders: 0,
     totalOrder: 0,
     pendingOrder: 0,
     cancelledOrder: 0,
@@ -34,13 +33,15 @@ export const orderReducer = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(get_dashboard_index_data.fulfilled, (state, { payload }) => {
-      state.totalOrder = payload.totalOrders;
-      state.pendingOrder = payload.pendingOrders;
-      state.cancelledOrder = payload.cancelledOrders;
-      state.recentOrders = payload.recentOrders;
-    });
+    builder.addCase(
+      get_dashboard_index_data.fulfilled,
+      (state, { payload }) => {
+        state.totalOrder = payload.totalOrder;
+        state.pendingOrder = payload.pendingOrder;
+        state.cancelledOrder = payload.cancelledOrder;
+        state.recentOrders = payload.recentOrders;
+      }
+    );
   },
 });
 
