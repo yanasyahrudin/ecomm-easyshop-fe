@@ -7,6 +7,7 @@ const Index = () => {
 
   const dispatch = useDispatch()
   const {userInfo} = useSelector((state) => state.auth)
+  const {recentOrders, totalOrders, pendingOrders, cancelledOrders} = useSelector((state) => state.dashboard)
 
   useEffect(() => {
     dispatch(get_dashboard_index_data(userInfo.id))
@@ -22,7 +23,7 @@ const Index = () => {
             </span>
           </div>
           <div className="flex flex-col justify-start items-start text-slate-600">
-            <h2 className="text-3xl font-bold">45</h2>
+            <h2 className="text-3xl font-bold">{totalOrders}</h2>
             <span>Orders</span>
           </div>
         </div>
@@ -34,7 +35,7 @@ const Index = () => {
             </span>
           </div>
           <div className="flex flex-col justify-start items-start text-slate-600">
-            <h2 className="text-3xl font-bold">25</h2>
+            <h2 className="text-3xl font-bold">{pendingOrders}</h2>
             <span>Pending Orders</span>
           </div>
         </div>
@@ -46,7 +47,7 @@ const Index = () => {
             </span>
           </div>
           <div className="flex flex-col justify-start items-start text-slate-600">
-            <h2 className="text-3xl font-bold">2</h2>
+            <h2 className="text-3xl font-bold">{cancelledOrders}</h2>
             <span>Cancelled Orders</span>
           </div>
         </div>
@@ -58,6 +59,7 @@ const Index = () => {
           <div className="relative overflow-x-auto rounded-md">
             <table className="w-full text-sm text-left text-gray-500 ">
               <thead className="text-xs text-gray-700 uppercase bg-gray-200 ">
+                
                 <tr>
                   <th scope="col" className="px-6 py-3">
                     Order ID
@@ -79,32 +81,34 @@ const Index = () => {
                     Action
                   </th>
                 </tr>
+                
               </thead>
               <tbody>
+                {recentOrders.map((o,i)=>{
                 <tr className="bg-white border-b">
                   <td
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                   >
-                    #344
+                    #{o._id}
                   </td>
                   <td
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                   >
-                    $233
+                    ${o.price}
                   </td>
                   <td
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                   >
-                    pending
+                    {o.payment_status}
                   </td>
                   <td
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                   >
-                    pending
+                    {o.delivery_status}
                   </td>
                   <td
                     scope="row"
@@ -123,6 +127,7 @@ const Index = () => {
 
                   </td>
                 </tr>
+                })}
               </tbody>
             </table>
           </div>

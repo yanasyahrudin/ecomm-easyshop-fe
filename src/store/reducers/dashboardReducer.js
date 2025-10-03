@@ -6,10 +6,10 @@ export const get_dashboard_index_data = createAsyncThunk(
   async (userId, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.get(
-        `/home/customer/get-dashboard-date/${userId}`
+        `/home/coustomer/get-dashboard-data/${userId}`
       );
       console.log(data);
-    //   return fulfillWithValue(data);
+      //   return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -22,9 +22,10 @@ export const orderReducer = createSlice({
     loading: false,
     errorMessage: "",
     successMessage: "",
-    totalOrders: 0,
-    pendingOrders: 0,
-    cancelledOrders: 0,
+    recentOrders: 0,
+    totalOrder: 0,
+    pendingOrder: 0,
+    cancelledOrder: 0,
   },
   reducers: {
     messageClear: (state, _) => {
@@ -32,7 +33,15 @@ export const orderReducer = createSlice({
       state.successMessage = "";
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+    .addCase(get_dashboard_index_data.fulfilled, (state, { payload }) => {
+      state.totalOrder = payload.totalOrders;
+      state.pendingOrder = payload.pendingOrders;
+      state.cancelledOrder = payload.cancelledOrders;
+      state.recentOrders = payload.recentOrders;
+    });
+  },
 });
 
 export const { messageClear } = dashboardReducer.actions;
