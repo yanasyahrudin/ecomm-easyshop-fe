@@ -15,6 +15,7 @@ export const get_dashboard_index_data = createAsyncThunk(
     }
   }
 );
+//end method
 
 export const dashboardReducer = createSlice({
   name: "dashboard",

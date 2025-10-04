@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"; 
+import { useEffect } from "react";
+import { get_orders } from "../../store/reducers/orderReducer";
 
 const Orders = () => {
+  const [state, setState] = useState("all");
 
-  const [state, setState] = useState("");
+  const dispatch = useDispatch();
 
+  const { orderId } = useParams();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(get_orders({ status:state, customerId: userInfo.id }) );
+  }
+  , [orderId]);
   return (
     <div className="bg-white p-4 rounded-md">
       <div className="flex justify-between items-center">
