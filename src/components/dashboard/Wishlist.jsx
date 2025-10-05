@@ -17,7 +17,7 @@ const Wishlist = () => {
               5%
             </div>
 
-            <img className="sm:w-ful h-[240px]" src={p.images[0]} alt="" />
+            <img className='sm:w-full w-full h-[240px]' src="http://localhost:3000/images/products/1.webp" alt="" />  
             <ul className="flex transition-all duration-700 -bottom-10 justify-center items gap-2 absolute w-full group-hover:bottom-3">
               <li className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all">
                 <FaRegHeart />

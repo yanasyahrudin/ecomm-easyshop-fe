@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api/api";
 
-
 export const place_order = createAsyncThunk(
   "order/place_order",
   async ({
@@ -23,13 +22,13 @@ export const place_order = createAsyncThunk(
         userId,
         navigate,
       });
-      navigate('/payment' ,{
+      navigate("/payment", {
         state: {
-          price: price+shipping_fee,
+          price: price + shipping_fee,
           items,
-          orderId: data.orderId
-        }
-      })
+          orderId: data.orderId,
+        },
+      });
       console.log(data);
     } catch (error) {
       console.log(error.response);
@@ -51,7 +50,22 @@ export const get_orders = createAsyncThunk(
     }
   }
 );
-//end method  
+//end method
+
+export const get_order_details = createAsyncThunk(
+  "order/get_order_details",
+  async (orderId, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.get(
+        `/home/coustomer/get-order-details/${orderId}`
+      );
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+//end method
 
 export const orderReducer = createSlice({
   name: "order",
@@ -68,11 +82,9 @@ export const orderReducer = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(get_orders.fulfilled, (state, { payload }) => {
-      state.myOrders= payload.orders
+    builder.addCase(get_orders.fulfilled, (state, { payload }) => {
+      state.myOrders = payload.orders;
     });
-    
   },
 });
 
