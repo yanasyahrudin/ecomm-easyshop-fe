@@ -82,8 +82,12 @@ export const orderReducer = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(get_orders.fulfilled, (state, { payload }) => {
+    builder
+    .addCase(get_orders.fulfilled, (state, { payload }) => {
       state.myOrders = payload.orders;
+    })
+    .addCase(get_order_details.rejected, (state, { payload }) => {
+      state.myOrder = payload.order;
     });
   },
 });
