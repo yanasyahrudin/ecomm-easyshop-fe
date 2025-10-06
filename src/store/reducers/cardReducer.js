@@ -6,7 +6,6 @@ export const add_to_card = createAsyncThunk(
   async (info, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.post("/home/product/add-to-card", info);
-      console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -22,7 +21,6 @@ export const get_card_products = createAsyncThunk(
       const { data } = await api.get(
         `/home/product/get-card-product/${userId}`
       );
-      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -38,7 +36,6 @@ export const delete_card_product = createAsyncThunk(
       const { data } = await api.delete(
         `/home/product/delete-card-product/${card_id}`
       );
-      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -54,13 +51,13 @@ export const quantity_inc = createAsyncThunk(
       const { data } = await api.put(
         `/home/product/quantity-inc/${card_id}`
       );
-      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+//end method
 
 export const quantity_dec = createAsyncThunk(
   "card/quantity_dec",
@@ -69,13 +66,27 @@ export const quantity_dec = createAsyncThunk(
       const { data } = await api.put(
         `/home/product/quantity-dec/${card_id}`
       );
-      console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+//end method
+
+export const add_to_whishlist = createAsyncThunk(
+  "card/add_to_whishlist",
+  async (info, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.post("/home/product/add-to-wishlist", info);
+      // console.log(data);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+//end method
 
 export const cardReducer = createSlice({
   name: "card",
