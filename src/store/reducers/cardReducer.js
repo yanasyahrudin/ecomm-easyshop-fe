@@ -74,8 +74,8 @@ export const quantity_dec = createAsyncThunk(
 );
 //end method
 
-export const add_to_whishlist = createAsyncThunk(
-  "card/add_to_whishlist",
+export const add_to_wishlist = createAsyncThunk(
+  "card/add_to_wishlist",
   async (info, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.post("/home/product/add-to-wishlist", info);
@@ -133,6 +133,10 @@ export const cardReducer = createSlice({
       })
       .addCase(quantity_dec.fulfilled, (state, { payload }) => {
         state.successMessage = payload.message;
+      })
+      .addCase(add_to_wishlist.fulfilled, (state, { payload }) => {
+        state.successMessage = payload.message;
+        state.wishlist_count = state.wishlist_count > 0 ? state.wishlist_count + 1 : 1;
       });
   },
 });
