@@ -3,8 +3,21 @@ import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Rating from "../Rating";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { get_wishlist_products } from "../../store/reducers/cardReducer";
 
 const Wishlist = () => {
+
+  const dispatch = useDispatch()
+  const { userInfo } = useSelector(state => state.auth)
+  const { errorMessage, successMessage } = useSelector(state => state.card)
+
+  useEffect(() => {
+    dispatch(get_wishlist_products(userInfo.id))
+  }, [])
+
   return (
     <div className="w-full grid grid-cols-4 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6">
       {[1, 2, 3, 4].map((p, i) => (
