@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -14,8 +14,18 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { product_details } from "../store/reducers/homeReducer";
+import { useDispatch } from "react-redux";
 
 const Details = () => {
+
+  const {slug} = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(product_details(slug));
+  },[slug])
+
   const images = [1, 2, 3, 4, 5, 6];
   const [image, setImage] = useState("");
   const discount = 10;
