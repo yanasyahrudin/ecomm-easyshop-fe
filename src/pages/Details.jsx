@@ -15,16 +15,18 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { product_details } from "../store/reducers/homeReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Details = () => {
-
-  const {slug} = useParams();
+  const { slug } = useParams();
   const dispatch = useDispatch();
+  const { product, relatedProducts, moreProducts } = useSelector(
+    (state) => state.home
+  );
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(product_details(slug));
-  },[slug])
+  }, [slug]);
 
   const images = [1, 2, 3, 4, 5, 6];
   const [image, setImage] = useState("");
@@ -91,11 +93,11 @@ const Details = () => {
               <span className="pt-1">
                 <IoIosArrowForward />
               </span>
-              <Link to="/">Category</Link>
+              <Link to="/">{product.category}</Link>
               <span className="pt-1">
                 <IoIosArrowForward />
               </span>
-              <span>Product Name</span>
+              <span>{product.name}</span>
             </div>
           </div>
         </div>
@@ -108,17 +110,13 @@ const Details = () => {
               <div className="p-5 border">
                 <img
                   className="h-[400px] w-full"
-                  src={
-                    image
-                      ? `http://localhost:3000/images/products/${image}.webp`
-                      : `http://localhost:3000/images/products/${images[2]}.webp`
-                  }
+                  src={image ? image : product.images?.[0]}
                   alt=""
                 />
               </div>
 
               <div className="py-3">
-                {images && (
+                {product.images && (
                   <Carousel
                     autoPlay={true}
                     infinite={true}
@@ -127,12 +125,12 @@ const Details = () => {
                     responsive={responsive}
                     transitionDuration={500}
                   >
-                    {images.map((img, i) => {
+                    {product.images.map((img, i) => {
                       return (
                         <div key={i} onClick={() => setImage(img)}>
                           <img
                             className="h-[120px] cursor-pointer"
-                            src={`http://localhost:3000/images/products/${img}.webp`}
+                            src={img}
                             alt=""
                           />
                         </div>
@@ -145,7 +143,7 @@ const Details = () => {
 
             <div className="flex flex-col gap-5">
               <div className="text-3xl text-slate-600 font-bold">
-                <h3>Product Name</h3>
+                <h3>{product.name}</h3>
               </div>
               <div className="flex justify-start items-center gap-4">
                 <div className="flex text-xl">
@@ -155,31 +153,25 @@ const Details = () => {
               </div>
 
               <div className="text-2xl text-red-500 font-bold flex gap-3">
-                {discount !== 0 ? (
+                {product.discount !== 0 ? (
                   <>
-                    Price: <h2 className="line-through">$500</h2>
+                    Price: <h2 className="line-through">${product.price}</h2>
                     <h2>
-                      ${500 - Math.floor((500 * discount) / 100)} (-{discount}{" "}
+                      ${product.price - Math.floor((500 * product.discount) / 100)} (-{product.discount}{" "}
                       %)
                     </h2>
                   </>
                 ) : (
-                  <h2>Price : $200 </h2>
+                  <h2>Price : ${product.price} </h2>
                 )}
               </div>
 
               <div className="text-slate-600">
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
-                </p>
+                <p>{product.description}</p>
               </div>
 
               <div className="flex gap-3 pb-10 border-b">
-                {stock ? (
+                {product.stock ? (
                   <>
                     <div className="flex bg-slate-200 h-[50px] justify-center items-center text-xl">
                       <div className="px-6 cursor-pointer">-</div>
@@ -424,10 +416,8 @@ const Details = () => {
             </Swiper>
           </div>
 
-          <div className='w-full flex justify-center items-center py-8'>
+          <div className="w-full flex justify-center items-center py-8">
             <div className="custom_bullet justify-center gap-3 !w-auto"></div>
-
-
           </div>
         </div>
       </section>

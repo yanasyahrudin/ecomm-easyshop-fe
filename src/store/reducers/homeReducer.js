@@ -91,6 +91,9 @@ export const homeReducer = createSlice({
       low: 0,
       high: 100,
     },
+    product: {},
+    relatedProducts: [],
+    moreProducts: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -112,7 +115,12 @@ export const homeReducer = createSlice({
         state.products = payload.products;
         state.totalProduct = payload.totalProduct;
         state.parPage = payload.parPage;
-      });
+      })
+      .addCase(product_details.fulfilled, (state, { payload }) => {
+        state.product = payload.product;
+        state.relatedProducts = payload.relatedProducts;
+        state.moreProducts = payload.moreProducts;
+      })
   },
 });
 
