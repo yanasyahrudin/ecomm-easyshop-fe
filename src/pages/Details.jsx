@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -17,17 +17,32 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { product_details } from "../store/reducers/homeReducer";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { add_to_card, messageClear } from "../store/reducers/cardReducer";
 
 const Details = () => {
+  const navigate = useNavigate();
   const { slug } = useParams();
   const dispatch = useDispatch();
   const { product, relatedProducts, moreProducts } = useSelector(
     (state) => state.home
   );
+  const { userInfo } = useSelector((state) => state.auth);
+  const { errorMessage, successMessage } = useSelector((state) => state.card);
 
   useEffect(() => {
     dispatch(product_details(slug));
   }, [slug]);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage]);
 
   const [image, setImage] = useState("");
   const discount = 10;
@@ -78,6 +93,20 @@ const Details = () => {
   const dec = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+    }
+  };
+
+  const add_card = () => {
+    if (userInfo) {
+      dispatch(
+        add_to_card({
+          userId: userInfo.id,
+          quantity,
+          productId: product._id,
+        })
+      );
+    } else {
+      navigate("/login");
     }
   };
 
@@ -175,7 +204,9 @@ const Details = () => {
                     <h2>
                       $
                       {product.price -
-                        Math.floor((product.price * product.discount) / 100)}{" "}
+                        Math.floor(
+                          (product.price * product.discount) / 100
+                        )}{" "}
                       (-{product.discount} %)
                     </h2>
                   </>
@@ -186,8 +217,7 @@ const Details = () => {
 
               <div className="text-slate-600">
                 <p>
-                  {product.description.substring(0, 230)}
-                  {"..."}
+                  {product.description}
                 </p>
               </div>
 
@@ -195,12 +225,16 @@ const Details = () => {
                 {product.stock ? (
                   <>
                     <div className="flex bg-slate-200 h-[50px] justify-center items-center text-xl">
-                      <div onClick={dec} className="px-6 cursor-pointer">-</div>
+                      <div onClick={dec} className="px-6 cursor-pointer">
+                        -
+                      </div>
                       <div className="px-6 cursor-pointer">{quantity}</div>
-                      <div onClick={inc} className="px-6 cursor-pointer">+</div>
+                      <div onClick={inc} className="px-6 cursor-pointer">
+                        +
+                      </div>
                     </div>
                     <div>
-                      <button className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#059473] text-white">
+                      <button onClick={add_card} className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#059473] text-white">
                         Add To Card
                       </button>
                     </div>
@@ -220,8 +254,8 @@ const Details = () => {
                   <span>Share On</span>
                 </div>
                 <div className="flex flex-col gap-5">
-                  <span className={`text-${stock ? "green" : "red"}-500`}>
-                    {stock ? `In Stock(${stock})` : "Out of Stock"}
+                  <span className={`text-${product.stock ? "green" : "red"}-500`}>
+                    {product.stock ? `In Stock(${product.stock})` : "Out of Stock"}
                   </span>
 
                   <ul className="flex justify-start items-center gap-3">
@@ -314,17 +348,7 @@ const Details = () => {
                     <Reviews />
                   ) : (
                     <p className="py-5 text-slate-600">
-                      What is lorem Ipsum? Lorem Ipsum is simply dummy text of
-                      the printing and typesetting industry. Lorem Ipsum has
-                      been the industry's standard dummy text ever since the
-                      1500s, when an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book. It has survived
-                      not only five centuries, but also the leap into electronic
-                      typesetting, remaining essentially unchanged. It was
-                      popularised in the 1960s with the release of Letraset
-                      sheets containing Lorem Ipsum passages, and more recently
-                      with desktop publishing software like Aldus PageMaker
-                      including versions of Lorem Ipsum.
+                      {product.description}
                     </p>
                   )}
                 </div>
