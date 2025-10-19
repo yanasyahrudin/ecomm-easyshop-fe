@@ -361,13 +361,13 @@ const Details = () => {
                   <h2>From Easy Shop</h2>
                 </div>
                 <div className="flex flex-col gap-5 mt-3 border p-3">
-                  {[1, 2, 3].map((p, i) => {
+                  {moreProducts.map((p, i) => {
                     return (
                       <Link className="block">
                         <div className="relative h-[270]">
                           <img
                             className="w-full h-full"
-                            src={`http://localhost:3000/images/products/${p}.webp`}
+                            src={p.images[0]}
                             alt=""
                           />
                           {discount !== 0 && (
@@ -378,14 +378,14 @@ const Details = () => {
                         </div>
 
                         <h2 className="text-slate-600 py-1 font-bold">
-                          Product Name
+                          {p.name}
                         </h2>
                         <div className="flex gap-2">
                           <h2 className="text-lg font-bold text-slate-600">
-                            $434
+                            ${p.price}
                           </h2>
                           <div className="flex items-center gap-2">
-                            <Rating ratings={4.5} />
+                            <Rating ratings={p.rating} />
                           </div>
                         </div>
                       </Link>
@@ -421,7 +421,7 @@ const Details = () => {
               modules={[Pagination]}
               className="mySwiper"
             >
-              {[1, 2, 3, 4, 5, 6].map((p, i) => {
+              {relatedProducts.map((p, i) => {
                 return (
                   <SwiperSlide key={i}>
                     <Link className="block">
@@ -429,7 +429,7 @@ const Details = () => {
                         <div className="w-full h-full">
                           <img
                             className="w-full h-full"
-                            src={`http://localhost:3000/images/products/${p}.webp`}
+                            src={p.images[0]}
                             alt=""
                           />
                           <div className="absolute h-full w-full top-0 left-0 bg-[#000] opacity-25 hover:opacity-50 transition-all duration-500"></div>
@@ -443,14 +443,14 @@ const Details = () => {
 
                       <div className="p-4 flex flex-col gap-1">
                         <h2 className="text-slate-600 text-lg font-bold">
-                          Product Name
+                          {p.name}
                         </h2>
                         <div className="flex justify-start items-center gap-2">
                           <h2 className="text-lg font-bold text-slate-600">
-                            $434
+                            ${p.price}
                           </h2>
                           <div className="flex items-center gap-2">
-                            <Rating ratings={4.5} />
+                            <Rating ratings={p.rating} />
                           </div>
                         </div>
                       </div>
