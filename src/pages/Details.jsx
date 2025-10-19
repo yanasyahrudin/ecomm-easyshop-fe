@@ -16,6 +16,7 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { product_details } from "../store/reducers/homeReducer";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const Details = () => {
   const { slug } = useParams();
@@ -28,7 +29,6 @@ const Details = () => {
     dispatch(product_details(slug));
   }, [slug]);
 
-  const images = [1, 2, 3, 4, 5, 6];
   const [image, setImage] = useState("");
   const discount = 10;
   const stock = 3;
@@ -41,7 +41,7 @@ const Details = () => {
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 6,
+      items: 5,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -63,6 +63,22 @@ const Details = () => {
       breakpoint: { max: 440, min: 0 },
       items: 1,
     },
+  };
+
+  const [quantity, setQuantity] = useState(1);
+
+  const inc = () => {
+    if (quantity >= product.stock) {
+      toast.error("Out Of Stock");
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const dec = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   };
 
   return (
@@ -157,8 +173,10 @@ const Details = () => {
                   <>
                     Price: <h2 className="line-through">${product.price}</h2>
                     <h2>
-                      ${product.price - Math.floor((500 * product.discount) / 100)} (-{product.discount}{" "}
-                      %)
+                      $
+                      {product.price -
+                        Math.floor((product.price * product.discount) / 100)}{" "}
+                      (-{product.discount} %)
                     </h2>
                   </>
                 ) : (
@@ -167,20 +185,23 @@ const Details = () => {
               </div>
 
               <div className="text-slate-600">
-                <p>{product.description}</p>
+                <p>
+                  {product.description.substring(0, 230)}
+                  {"..."}
+                </p>
               </div>
 
               <div className="flex gap-3 pb-10 border-b">
                 {product.stock ? (
                   <>
                     <div className="flex bg-slate-200 h-[50px] justify-center items-center text-xl">
-                      <div className="px-6 cursor-pointer">-</div>
-                      <div className="px-6 cursor-pointer">2</div>
-                      <div className="px-6 cursor-pointer">+</div>
+                      <div onClick={dec} className="px-6 cursor-pointer">-</div>
+                      <div className="px-6 cursor-pointer">{quantity}</div>
+                      <div onClick={inc} className="px-6 cursor-pointer">+</div>
                     </div>
                     <div>
                       <button className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#059473] text-white">
-                        Add To Cart
+                        Add To Card
                       </button>
                     </div>
                   </>
@@ -195,7 +216,7 @@ const Details = () => {
 
               <div className="flex py-5 gap-5">
                 <div className="w-[150px] text-black font-bold text-xl flex flex-col gap-5">
-                  <span>Availablelity</span>
+                  <span>Availability</span>
                   <span>Share On</span>
                 </div>
                 <div className="flex flex-col gap-5">
@@ -277,9 +298,9 @@ const Details = () => {
                     Reviews
                   </button>
                   <button
-                    onClick={() => setState("descriptions")}
+                    onClick={() => setState("description")}
                     className={`py-1 hover:text-white px-5 hover:bg-[#059473] ${
-                      state === "descriptions"
+                      state === "description"
                         ? "bg-[#059473] text-white"
                         : "bg-slate-200 text-slate-700"
                     } rounded-sm`}
@@ -327,7 +348,7 @@ const Details = () => {
                           />
                           {discount !== 0 && (
                             <div className="flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2">
-                              {discount}$
+                              {discount}%
                             </div>
                           )}
                         </div>
@@ -391,7 +412,7 @@ const Details = () => {
                         </div>
                         {discount !== 0 && (
                           <div className="flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2">
-                            {discount}$
+                            {discount}%
                           </div>
                         )}
                       </div>
