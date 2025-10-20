@@ -17,7 +17,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { product_details } from "../store/reducers/homeReducer";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import { add_to_card, messageClear } from "../store/reducers/cardReducer";
+import { add_to_card, messageClear, add_to_wishlist } from "../store/reducers/cardReducer";
 
 const Details = () => {
   const navigate = useNavigate();
@@ -110,6 +110,25 @@ const Details = () => {
     }
   };
 
+  const add_wishlist = () => {
+    if (userInfo) {
+      dispatch(
+        add_to_wishlist({
+          userId: userInfo.id,
+          productId: product._id,
+          name: product.name,
+          price: product.price,
+          image: product.images[0],
+          discount: product.discount,
+          rating: product.rating,
+          slug: product.slug,
+        })
+      );
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -149,7 +168,7 @@ const Details = () => {
       </section>
 
       <section>
-        <div className="w-[85%] md:w-[80%] sm:w-[90%] h-full mx-auto">
+        <div className="w-[85%] md:w-[80%] sm:w-[90%] h-full mx-auto pb-16">
           <div className="grid grid-cols-2 md-lg:grid-cols-1 gap-8">
             <div>
               <div className="p-5 border">
@@ -216,9 +235,7 @@ const Details = () => {
               </div>
 
               <div className="text-slate-600">
-                <p>
-                  {product.description}
-                </p>
+                <p>{product.description}</p>
               </div>
 
               <div className="flex gap-3 pb-10 border-b">
@@ -234,7 +251,10 @@ const Details = () => {
                       </div>
                     </div>
                     <div>
-                      <button onClick={add_card} className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#059473] text-white">
+                      <button
+                        onClick={add_card}
+                        className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#059473] text-white"
+                      >
                         Add To Card
                       </button>
                     </div>
@@ -243,7 +263,10 @@ const Details = () => {
                   ""
                 )}
 
-                <div className="h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-cyan-500 text-white">
+                <div
+                  onClick={add_wishlist}
+                  className="h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-cyan-500 text-white"
+                >
                   <FaHeart />
                 </div>
               </div>
@@ -254,8 +277,12 @@ const Details = () => {
                   <span>Share On</span>
                 </div>
                 <div className="flex flex-col gap-5">
-                  <span className={`text-${product.stock ? "green" : "red"}-500`}>
-                    {product.stock ? `In Stock(${product.stock})` : "Out of Stock"}
+                  <span
+                    className={`text-${product.stock ? "green" : "red"}-500`}
+                  >
+                    {product.stock
+                      ? `In Stock(${product.stock})`
+                      : "Out of Stock"}
                   </span>
 
                   <ul className="flex justify-start items-center gap-3">
@@ -347,9 +374,7 @@ const Details = () => {
                   {state === "reviews" ? (
                     <Reviews />
                   ) : (
-                    <p className="py-5 text-slate-600">
-                      {product.description}
-                    </p>
+                    <p className="py-5 text-slate-600">{product.description}</p>
                   )}
                 </div>
               </div>
