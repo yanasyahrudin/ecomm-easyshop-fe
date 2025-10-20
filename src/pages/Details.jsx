@@ -17,7 +17,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { product_details } from "../store/reducers/homeReducer";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import { add_to_card, messageClear, add_to_wishlist } from "../store/reducers/cardReducer";
+import {
+  add_to_card,
+  messageClear,
+  add_to_wishlist,
+} from "../store/reducers/cardReducer";
 
 const Details = () => {
   const navigate = useNavigate();
@@ -127,6 +131,39 @@ const Details = () => {
     } else {
       navigate("/login");
     }
+  };
+
+  const buynow = () => {
+    let price = 0;
+    if (product.discount !== 0) {
+      price =
+        product.price - Math.floor((product.price * product.discount) / 100);
+    } else {
+      price = product.price;
+    }
+
+    const obj = [
+      {
+        sellerId: product.sellerId,
+        shopName: product.shopName,
+        price: quantity * (price - Math.floor((price * 5) / 100)),
+        products: [
+          {
+            quantity,
+            productInfo: product,
+          },
+        ],
+      },
+    ];
+    
+    navigate("/shipping", {
+      state: {
+        products: obj,
+        price: price * quantity,
+        shipping_fee: 50,
+        items: 1,
+      },
+    });
   };
 
   return (
@@ -323,8 +360,11 @@ const Details = () => {
               </div>
 
               <div className="flex gap-3">
-                {stock ? (
-                  <button className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#36dab3] text-white">
+                {product.stock ? (
+                  <button
+                    onClick={buynow}
+                    className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#36dab3] text-white"
+                  >
                     Buy Now
                   </button>
                 ) : (
