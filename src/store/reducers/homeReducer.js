@@ -75,7 +75,20 @@ export const product_details = createAsyncThunk(
       console.log(error.response);
     } 
   }
-);
+);//end method
+
+export const customer_reviews = createAsyncThunk(
+  "review/customer_review",
+  async (info, { fulfillWithValue }) => {
+    try {
+      const {data} = await api.post('/review/customer/submit-review', info);
+      console.log(data);  
+      return fulfillWithValue(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+);//end method
 
 export const homeReducer = createSlice({
   name: "home",
