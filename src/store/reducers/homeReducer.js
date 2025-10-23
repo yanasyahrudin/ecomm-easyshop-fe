@@ -20,7 +20,7 @@ export const get_products = createAsyncThunk(
   async (_, { fulfillWithValue }) => {
     try {
       const { data } = await api.get("/home/get-products");
-      console.log(data);
+
       return fulfillWithValue(data);
     } catch (error) {
       console.log(error.response);
@@ -33,7 +33,7 @@ export const price_range_product = createAsyncThunk(
   async (_, { fulfillWithValue }) => {
     try {
       const { data } = await api.get("/home/price-range-latest-product");
-      console.log(data);
+
       return fulfillWithValue(data);
     } catch (error) {
       console.log(error.response);
@@ -55,7 +55,7 @@ export const query_products = createAsyncThunk(
           query.searchValue ? query.searchValue : ""
         }`
       );
-      console.log(data);
+
       return fulfillWithValue(data);
     } catch (error) {
       console.log(error.response);
@@ -69,26 +69,42 @@ export const product_details = createAsyncThunk(
   async (slug, { fulfillWithValue }) => {
     try {
       const { data } = await api.get(`/home/product-details/${slug}`);
-      console.log(data);
-      return fulfillWithValue(data);
-    } catch (error) {
-      console.log(error.response);
-    } 
-  }
-);//end method
 
-export const customer_review = createAsyncThunk(
-  "review/customer_review",
-  async (info, { fulfillWithValue }) => {
-    try {
-      const {data} = await api.post('/home/customer/submit-review', info);
-      console.log(data);  
       return fulfillWithValue(data);
     } catch (error) {
       console.log(error.response);
     }
   }
-);//end method
+); //end method
+
+export const customer_review = createAsyncThunk(
+  "review/customer_review",
+  async (info, { fulfillWithValue }) => {
+    try {
+      const { data } = await api.post("/home/customer/submit-review", info);
+
+      return fulfillWithValue(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+); //end method
+
+export const get_reviews = createAsyncThunk(
+  "review/get_reviews",
+  async ({ productId, pageNumber }, { fulfillWithValue }) => {
+    try {
+      const { data } = await api.get(
+        `/home/customer/get-reviews/${productId}?pageNo=${pageNumber}`
+      );
+      // console.log(data)
+      return fulfillWithValue(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+);
+//end method
 
 export const homeReducer = createSlice({
   name: "home",
@@ -109,16 +125,15 @@ export const homeReducer = createSlice({
     moreProducts: [],
     errorMessage: "",
     successMessage: "",
-    totalReivew:[],
-    rating_review:[],
-    reviews:[],
-
+    totalReivew: [],
+    rating_review: [],
+    reviews: [],
   },
   reducers: {
-    messageClear: (state,_) => {
+    messageClear: (state, _) => {
       state.errorMessage = "";
       state.successMessage = "";
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -147,7 +162,7 @@ export const homeReducer = createSlice({
       })
       .addCase(customer_review.fulfilled, (state, { payload }) => {
         state.successMessage = payload.message;
-      });      
+      });
   },
 });
 
