@@ -19,7 +19,13 @@ const Reviews = ({ product }) => {
   const [parPage, setParPage] = useState(10);
   const [pageNumber, setPageNumber] = useState(1);
   const { userInfo } = useSelector((state) => state.auth);
-  const { successMessage } = useSelector((state) => state.home);
+  const { successMessage, reviews, rating_review, totalReview } = useSelector(
+    (state) => state.home
+  );
+  console.log(rating_review);
+  console.log(reviews);
+  console.log(totalReview);
+
   const [rat, setRat] = useState("");
   const [re, setRe] = useState("");
 
@@ -37,6 +43,7 @@ const Reviews = ({ product }) => {
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage);
+      dispatch(get_reviews({ productId: product._id, pageNumber }));
       setRat("");
       setRe("");
       dispatch(messageClear());
@@ -132,37 +139,32 @@ const Reviews = ({ product }) => {
       </div>
 
       <h2 className="text-slate-600 text-xl font-bold py-5">
-        Product Review 10
+        Product Review {totalReview}
       </h2>
 
       <div className="flex flex-col gap-8 pb-10 pt-4">
-        {[1, 2, 3, 4, 5].map((r, i) => (
+        {reviews.map((r, i) => (
           <div className="flex flex-col gap-1">
             <div className="flex justify-between items-center">
               <div className="flex gap-1 text-xl">
-                <RatingTemp rating={4} />
+                <RatingTemp rating={r.rating} />
               </div>
-              <span className="text-slate-600">8 Jan 2024</span>
+              <span className="text-slate-600">{r.date}</span>
             </div>
-            <span className="text-slate-600 text-md">Yana Syahrudin</span>
-            <p className="text-slate-600 text-sm">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
+            <span className="text-slate-600 text-md">{r.name}</span>
+            <p className="text-slate-600 text-sm">{r.review}</p>
           </div>
         ))}
         <div className="flex justify-content">
-          {
+          {totalReview > 5 && (
             <Pagination
               pageNumber={pageNumber}
               setPageNumber={setPageNumber}
-              totalItem={10}
+              totalItem={totalReview}
               parPage={parPage}
-              showItem={Math.floor(10 / 3)}
+              showItem={Math.floor(totalReview / 3)}
             />
-          }
+          )}
         </div>
       </div>
 
