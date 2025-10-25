@@ -47,6 +47,7 @@ function App() {
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="my-wishlist" element={<Whishlist />} />
             <Route path="order/details/:orderId" element={<OrderDetails />} />
+            <Route path="chat" element={<Chat />} />
             <Route path="chat/:sellerId" element={<Chat />} />
           </Route>
         </Route>
