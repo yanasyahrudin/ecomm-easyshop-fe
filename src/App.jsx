@@ -19,9 +19,10 @@ import Orders from "./components/dashboard/Orders";
 import ChangePassword from "./components/dashboard/ChangePassword";
 import Whishlist from "./components/dashboard/Wishlist";
 import OrderDetails from "./components/dashboard/OrderDetails";
+import Chat from "./components/dashboard/Chat";
 
 function App() {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(get_category());
   }, []);
@@ -39,14 +40,15 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/products/search?" element={<SearchProducts />} />
         <Route path="/product/details/:slug" element={<Details />} />
-        <Route path="/dashboard" element={<ProtectUser />} >
-          <Route path="" element={<Dashboard />} >
-          <Route path="" element={<Index />} />
-          <Route path="my-orders" element={<Orders />} />
-          <Route path="change-password" element={<ChangePassword />} />
-          <Route path="my-wishlist" element={<Whishlist />} />
-          <Route path="order/details/:orderId" element={<OrderDetails />} />
-        </Route>
+        <Route path="/dashboard" element={<ProtectUser />}>
+          <Route path="" element={<Dashboard />}>
+            <Route path="" element={<Index />} />
+            <Route path="my-orders" element={<Orders />} />
+            <Route path="change-password" element={<ChangePassword />} />
+            <Route path="my-wishlist" element={<Whishlist />} />
+            <Route path="order/details/:orderId" element={<OrderDetails />} />
+            <Route path="chat/:sellerId" element={<Chat />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

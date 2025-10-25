@@ -273,7 +273,9 @@ const Details = () => {
 
               <div className="text-slate-600">
                 <p>{product.description}</p>
-                <p className="text-slate-600 py-1 font-bold">Shop Name: {product.shopName}</p>
+                <p className="text-slate-600 py-1 font-bold">
+                  Shop Name: {product.shopName}
+                </p>
               </div>
 
               <div className="flex gap-3 pb-10 border-b">
@@ -372,7 +374,7 @@ const Details = () => {
                   ""
                 )}
                 <Link
-                  to="#"
+                  to={`/dashboard/chat/${product.sellerId}`}
                   className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-red-500/40 bg-red-500 text-white"
                 >
                   Chat Seller
