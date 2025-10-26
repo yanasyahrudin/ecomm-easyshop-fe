@@ -12,6 +12,10 @@ const Chat = () => {
   const { sellerId } = useParams()
   const { userInfo } = useSelector((state) => state.auth);
 
+  useEffect(() =>{
+    socket.emit('add_user', userInfo.id, userInfo)
+  }, [])
+
   return (
     <div className="bg-white p-3 rounded-md">
       <div className="w-full flex">
