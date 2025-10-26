@@ -5,16 +5,23 @@ import { IoSend } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+const socket = io.connect("http://localhost:5000");
+import { add_friend } from "../../store/reducers/chatReducer";
 
 const Chat = () => {
-
-  const { sellerId } = useParams()
+  const dispatch = useDispatch();
+  const { sellerId } = useParams();
   const { userInfo } = useSelector((state) => state.auth);
 
-  useEffect(() =>{
-    socket.emit('add_user', userInfo.id, userInfo)
-  }, [])
+  useEffect(() => {
+    socket.emit("add_user", userInfo.id, userInfo);
+  }, []);
+
+  useEffect(() => {
+    dispatch(add_friend({ sellerId: sellerId || "", userId: userInfo.id }));
+  }, [sellerId]);
 
   return (
     <div className="bg-white p-3 rounded-md">
