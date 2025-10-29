@@ -12,7 +12,7 @@ const rootReducer = {
     card: cardReducer,
     order: orderReducer,
     dashboard: dashboardReducer,
-    chatReducer: chatReducer,
+    chat: chatReducer,
 }
 
 export default rootReducer;

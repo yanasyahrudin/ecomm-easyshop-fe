@@ -18,11 +18,27 @@ export const add_friend = createAsyncThunk(
 
 export const chatReducer = createSlice({
   name: "chat",
-  initialState: {},
-  reducers: {
-    messageClear: (state, _) => {},
+  initialState: {
+    fb_messages: [],
+    my_friends: [],
+    currentFd: "",
+    errorMessage: "",
+    successMessage: "",
   },
-  extraReducers: (builder) => {},
+  reducers: {
+    messageClear: (state, _) => {
+      state.errorMessage = "";
+      state.successMessage = "";
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(add_friend.fulfilled, (state, { payload }) => {
+      state.fb_messages = payload.messages;
+      state.my_friends = payload.MyFriends;
+      state.currentFd = payload.currentFd;
+    });
+  },
 });
 
+export const { messageClear } = chatReducer.actions;
 export default chatReducer.reducer;
