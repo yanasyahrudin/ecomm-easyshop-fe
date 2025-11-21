@@ -16,6 +16,21 @@ export const add_friend = createAsyncThunk(
   }
 );
 
+export const send_message = createAsyncThunk(
+  "chat/send_message",
+  async (info, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.post(
+        "/chat/customer/send-message-to-seller",
+        info
+      );
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const chatReducer = createSlice({
   name: "chat",
   initialState: {

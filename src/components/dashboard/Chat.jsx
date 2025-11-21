@@ -1,13 +1,10 @@
-import React from "react";
-import { AiOutlineMessage } from "react-icons/ai";
+import Raact, { useEffect, useState } from "react";
+import { AiOutlineMessage, AiOutlinePlus } from "react-icons/ai";
 import { GrEmoji } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { AiOutlinePlus } from "react-icons/ai";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { add_friend } from "../../store/reducers/chatReducer";
+import { Link, useParams } from "react-router-dom";
+import { add_friend,send_message } from "../../store/reducers/chatReducer";
 import io from "socket.io-client";
 const socket = io("http://localhost:5000");
 
@@ -18,6 +15,7 @@ const Chat = () => {
   const { fb_messages, currentFd, my_friends } = useSelector(
     (state) => state.chat
   );
+  const { text, setText } = useState("");
 
   useEffect(() => {
     socket.emit("add_user", userInfo.id, userInfo);
@@ -27,6 +25,18 @@ const Chat = () => {
     dispatch(add_friend({ sellerId: sellerId || "", userId: userInfo.id }));
   }, [sellerId]);
 
+  const send = () => {
+    if (text){
+      dispatch(send_message({
+        userId: userInfo.id,
+        text,
+        sellerId,
+        name: userInfo.name,
+      }))
+      setText("")
+    }
+  }
+  
   return (
     <div className="bg-white p-3 rounded-md">
       <div className="w-full flex">
@@ -38,19 +48,19 @@ const Chat = () => {
             <span>Message</span>
           </div>
           <div className="w-full flex flex-col text-slate-600 py-4 h-[400px] pr-3">
-            {
-              my_friends?.map((f, i) => <Link
-              to={`/dashboard/chat/${f.fdId}`}
-              key={i}
-              className={`flex gap-2 justify-start items-center pl-2 py-[5px]`}
-            >
-              <div className="w-[30px] h-[30px] rounded-full relative">
-                <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute right-0 bottom-0"></div>
-                <img src={f.image} alt="" />
-              </div>
-              <span>{f.name}</span>
-            </Link>
-            )}
+            {my_friends?.map((f, i) => (
+              <Link
+                to={`/dashboard/chat/${f.fdId}`}
+                key={i}
+                className={`flex gap-2 justify-start items-center pl-2 py-[5px]`}
+              >
+                <div className="w-[30px] h-[30px] rounded-full relative">
+                  <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute right-0 bottom-0"></div>
+                  <img src={f.image} alt="" />
+                </div>
+                <span>{f.name}</span>
+              </Link>
+            ))}
           </div>
         </div>
         <div className="w-[calc(100%-230px)]">
@@ -97,6 +107,8 @@ const Chat = () => {
 
                 <div className="border h-[40px] p-0 ml-2 w-[calc(100%-90px)] rounded-full relative">
                   <input
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
                     type="text"
                     placeholder="input message"
                     className="w-full rounded-full h-full outline-none p-3"
@@ -108,7 +120,7 @@ const Chat = () => {
                   </div>
                 </div>
                 <div className="w-[40px] p-2 justify-center items-center rounded-full">
-                  <div className="text-2xl cursor-pointer">
+                  <div onClick={send} className="text-2xl cursor-pointer">
                     <IoSend />
                   </div>
                 </div>
